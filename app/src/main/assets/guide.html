@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+.w3-sidebar a {font-family: "Roboto", sans-serif}
+body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
+</style>
+</head>
+<body class="w3-content" style="max-width:1200px" >
+
+<!-- Sidebar/menu -->
+
+
+<!-- Top menu on small screens -->
+<header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
+    <div class="w3-bar-item w3-padding-24 w3-wide w3-right">TRAINING GUIDE</div>
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-left" style="cursor:pointer" title="Menu bar"  onclick="w3_open()"><i class="fa fa-bars" ></i></a>
+</header>
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+    <div class="w3-container w3-display-container w3-padding-16">
+        <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright" style="cursor:pointer" title="close side menu"></i>
+        <h3 class="w3-wide"><b>TRAINING GUIDE</b></h3>
+    </div>
+    <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
+        <p> <a href="#intro" onclick="w3_close()" class="card0">Introduction</a></p>
+        <p> <a href="#overview" onclick="w3_close()" class="card1">Overview</a></p>
+        <p><a href="#hold" onclick="w3_close()" class="card2">Holding the SmartCane</a></p>
+        <p><a href="#sensor" onclick="w3_close()" class="card3">SmartCane Sensor Direction and Orientation</a></p>
+        <p> <a href="#buttons"  onclick="w3_close()"class="card4">SmartCane's Buttons</a></p>
+        <p><a href="#vibration" onclick="w3_close()" class="card5">SmartCane Vibration Patterns and Obstacle Distances</a></p>
+        <p><a href="#battery" onclick="w3_close()"class="card6">SmartCane Battery Charging</a></p>
+        <p><a href="#avoid" onclick="w3_close()"class="card7">Obstacle Avoidance and Path Finding</a></p>
+        <p><a href="#fast"onclick="w3_close()" class="card8">Detection Of Fast Approaching Objects</a></p>
+        <p><a href="#attach" onclick="w3_close()"class="card9">White Cane Attachment and Detachment</a></p>
+        <p><a href="#safety" onclick="w3_close()"class="card10">Safe and Independent Mobility</a></p>
+        <p><a href="#faq"onclick="w3_close()" class="card11">Frequently Asked Questions</a></p>
+        <p><a href="#ux" onclick="w3_close()"class="card12">User Experience</a></p>
+
+    </div>
+
+</nav>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:250px">
+
+    <!-- Push down content on small screens -->
+    <div class="w3-hide-large" style="margin-top:83px"></div>
+
+    <!-- Top header -->
+
+    <script>
+
+
+
+
+
+// Open and close sidebar
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+
+}
+
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+
+    <div class="card0" id="intro" >
+        <h3>INTRODUCTION</h3>
+
+        <a target="blank">
+            <iframe width="320" height="180"
+                    src="https://www.youtube.com/embed/HetxkSmobPc?controls=1">
+            </iframe></a>
+        <div>SmartCane's Introduction Video</div>
+        <p>The SmartCane device fits onto the top fold of a foldable white cane and acts as a natural extension to it. It overcomes the limitations of the white cane by detecting knee-above and over-hanging obstacles up to a distance of 3 meters in front of the person walking with the device. </p>
+        <p>The SmartCane device uses ultrasonic waves to detect presence of obstacles. Ultrasonic waves are sound waves which are not audible to human beings. The device has ultrasonic sensors. One sensor transmits ultrasonic waves which spread in a conical shape. These waves get reflected in the presence of obstacles and the waves thus reflected from obstacles are detected by the other sensor of the device. If the obstacles from which waves are reflected lie within a certain direction and distance range, a warning is issued to the user in the form of tactile feedback through vibrations similar to a cell phone.
+        </p>
+        <p>It is important to detect such obstacles early, so that one has enough time to negotiate them from a safe distance. As compared to the white cane, the detection distance is increased from 0.5 meter to 3 meters.  It informs about the presence of objects before actually touching the object with the cane and thus helps in preventing unwanted contact. This avoids socially awkward situations like collision with people or trash or unsafe collision with animals. It also detects the objects that are above the knee such as overhanging tree branches, open window panes, protruding air conditioners, underside of parked vehicles like trucks, buses etc. It is therefore very helpful in avoiding injuries that may occur due to abrupt collisions with them.
+            SmartCane device uses ultrasonic ranging to detect objects in its path and generates tactile output in the form of different vibratory patterns. These vibrations convey the distance information and thus enable the user to negotiate the obstacles from a safe distance. With simple orientation and training, any visually impaired person who is a regular user of the white cane for mobility can benefit from this device.
+            </p>
+        <p>For every SmartCane user it is important to listen or read the self-learning user manual in order to learn the features, correct usage and precautions necessary for mobility with the SmartCane device. The self-learning user manual is available in accessible Daisy Format (audio only), e-Text (doc and html) and Braille print-ready format in various languages in the Compact Disc (CD) accompanying the device.</p>
+   <p>A large number of users and organizations working for the people with visual impairment have contributed towards the development of this device through their valuable feedback.</p>
+    <p>KEY FEATURES OF THIS PRODUCT</p>
+       <p> •	Adjustable detection range: 3 m (long range) and 1.8 m (short range)
+        •	Sensors can detect a 3 cm wide pipe from 3 m distance
+        •	Intuitive and distinctive vibration patterns indicating obstacle distance
+        •	Ergonomic grip for comfortable holding and cane tapping
+        •	Adjustable sensor mechanism for use by persons of different heights
+        •	In-built rechargeable battery with a long battery back-up and easy charging
+        •	Can be easily attached / detached from a compatible White cane
+        •	Conforms to international quality standards
+    </p>
+    <p>OVERALL BENEFITS
+        •	SmartCane ensures independent mobility, safety and gives confidence as it detects hazardous, raised knee-above obstacles.
+        •	It gives pre-warning of obstacles and allows path finding without collision. This reduces injuries and awkwardness of collision during mobility.
+    </p></div>
+    <!-- Image header -->
+
+
+<div class="card1" id="overview">
+            <h3>OVERVIEW</h3>
+
+            <a target="blank">
+                <iframe width="320" height="180"
+                        src="https://www.youtube.com/embed/HetxkSmobPc?controls=1">
+                </iframe></a>
+            <div>SmartCane's Overview Video</div>
+            <p>FACTS:</p>
+                <p>The SmartCane device uses ultrasonic waves to detect presence of obstacles. Ultrasonic waves are sound waves which are not audible to human beings. The device has ultrasonic sensors. One sensor transmits ultrasonic waves which spread in a conical shape. These waves get reflected in the presence of obstacles and the waves thus reflected from obstacles are detected by the other sensor of the device. If the obstacles from which waves are reflected lie within a certain direction and distance range, a warning is issued to the user in the form of tactile feedback through vibrations similar to a cell phone.
+            </p>
+            <p>INTERACTIVE TASK:</p>
+                <p>This interaction can be very brief and the following points should be emphasized
+                1.	Purpose of the SmartCane device.
+                2.	Brief overview of how it works.
+                3.	Its advantages over white cane.
+                4.	The fact that it is an enhancement to white cane and not a replacement.
+                5.	What it can detect and where it can be used</p>
+        </div>
+        <div class="card2" id="hold">
+            <h3>HOLDING THE SMARTCANE</h3>
+
+            <a target="blank">
+                <iframe width="320" height="180"
+                        src="https://www.youtube.com/embed/JkxwR882ZGs?controls=1">
+                </iframe></a>
+            <div>SmartCane's Holding Video</div>
+            <p>PURPOSE:</p>
+               <p> Learning the correct technique of holding the SmartCane device and also observing whether the SmartCane mounted white cane length is appropriate or not.</p>
+
+                <p>FACTS:</p>
+                <p>The SmartCane device fits onto the top fold of a foldable white cane and acts as a natural extension to it. Thus, there is no requirement of learning any new gripping style for holding the SmartCane device and one can stick to his/her original white cane holding style. The device comes fitted on the top fold of a white cane whose length is chosen such that it is acceptable to most users. However, if the length is significantly more or less than the length of the white cane of the user then he/she may experience some undue stress/pain in the wrist while holding the SmartCane device.</p>
+
+            <p>INTERACTIVE TASK:</p>
+               <p> 1.	Explain the user that he/she can hold the device in the same manner as they are used to holding their white cane.
+                2.	Ask the trainee to hold the SmartCane device normally.
+                3.	Ask the trainee if he/she is comfortable in holding the SmartCane device and also observe whether there is any undue stress or pain on his/her wrist due to inappropriate cane length. In case this cane is significantly longer or shorter than the user’s white cane length, preferably replace it with the compatible white cane of appropriate length available at a local SmartCane distribution center.
+
+            </p>
+        </div>
+    </div>
+
+        <div class="card3" id="sensor">
+            <h3>SMARTCANE SENSOR DIRECTION AND ORIENTATION</h3>
+            <a target="blank">
+                <iframe width="320" height="180"
+                        src="https://www.youtube.com/embed/BFtNoAWbeLE?controls=1">
+                </iframe></a>
+            <div>SmartCane's Sensor Direction and Orientation Video</div>
+<p> PURPOSE:</p>
+   <p>Learning the correct technique of orienting SmartCane sensors in the right direction.</p>
+
+   <p>FACTS:</p>
+   <p>Entire functionality of the SmartCane device is based on the correct detection of obstacles by the sensors while a user is walking with the device. If the sensors are not pointing in the right direction and/or not oriented properly, then the sensors will not be able to detect the obstacles/objects coming in the path and may start detecting the objects on other sides, depending upon the direction in which they are pointing.
+            SmartCane sensors direction: They should always point in the direction in which the user is walking, away from his/her body.
+            Sensors Orientation: The sensor mechanism is made adjustable for use by persons with different heights and to provide flexibility of different holding styles. Sensors can be adjusted to one of the three positions depending on the height and cane holding style of the user. Correct position for proper detection of obstacles from knee to head height is when the device sensors point towards the chest of the person standing in front of the user at a distance of 2 approximately meters. For most users, the Centre position is the best position. For very tall users, the Top position is recommended. For short users who hold the cane in an inclined manner, the Bottom position is recommended.
+</p>
+            <p>INTERACTIVE TASK:</p>
+               <p> 1.	Emphasize on the importance of correct sensor direction and help your trainee hold the SmartCane device with sensors pointing in the direction in which he/she is walking.
+                2.	Explain how sensor angle adjustment mechanism works and its purpose.
+                3.	Help your trainee feel all the three sensor positions by touching on his own.
+                4.	Observe the height and holding style of the user and appropriately adjust the sensor orientation to one of the three positions.
+            </p>
+        </div></div>
+
+
+        <div class="card4" id="buttons">
+            <h3>SMARTCANE BUTTONS</h3>
+            <a target="blank">
+                <iframe width="320" height="180"
+                        src="https://www.youtube.com/embed/BFtNoAWbeLE?controls=1">
+                </iframe></a>
+            <div>SmartCane's Buttons Video</div>
+            <p>PURPOSE:</p>
+               <p> Learning the purpose of SmartCane buttons and how to identify and use them for proper device operation.</p>
+
+                <p>FACTS:</p>
+                <p>Operation of SmartCane device is controlled through 2 sliding buttons. They are present on sides of the sensor box: ON/OFF button on left and MODE button on right.
+                ON/OFF button is surrounded by the embossed rectangle which is open on one side. A line coming out of the rectangle indicates the ON direction to the user.
+                MODE button is used to change the detection range of the SmartCane device. There is an embossed short line on the top side of this button and a long line terminated by a horizontal bar (like inverted alphabet ‘T’) on the other side of this button. The short line indicates short range and long line indicates long range.
+                In short range mode, the detection range of the SmartCane device is 1.8 meters.
+                In long range mode, the detection range of the SmartCane device is 3 meters.
+
+            </p>
+            <p>INTERACTIVE TASK:</p>
+               <p> 1.	Educate the user about the position of these buttons and help them identify these buttons using embossed symbols.
+                2.	Make them use ON/OFF button to switch the device ON and OFF.
+                3.	Briefly explain the purpose of MODE switch.
+
+
+            </p>
+        </div></div>
+
+
+        <div class="card5" id="vibration">
+            <h3>SMARTCANE VIBRATION PATTERNS AND OBSTACLE DISTANCES</h3>
+            <a target="blank">
+                <iframe width="320" height="180"
+                        src="https://www.youtube.com/embed/BFtNoAWbeLE?controls=1">
+                </iframe></a>
+            <div>SmartCane's Vibration Patterns and Obstacle Distances Video</div>
+            <p>PURPOSE:</p>
+                <p>Learning the vibration patterns that are used in the SmartCane device to convey distance information about the obstacles coming in the path of the person walking with it.</p>
+               <p> FACTS:</p>
+                <p>In long range mode, the SmartCane device can detect obstacles within a distance of 3 meters in front of the user and this distance information is conveyed through 4 simple vibratory patterns. However, in short range mode, device can detect obstacles only within a distance of 1.8 meters from the user and this distance information is conveyed through 3 simple vibratory patterns. The relationship between the vibration patterns and the distance of the obstacle from the user is as follows: shorter the distance of detected obstacle/object from the user, faster the intensity of vibrations. In other words: closer the obstacle, faster the vibrations.</p>
+
+
+            <h4>Table below summarizes the vibration patterns and corresponding distances.</h4>
+
+            <table id="pattern">
+                <tr>
+                    <th>Vibration Pattern Type</th>
+                    <th>Pattern Number</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Single vibration pulse repeated every second after a pause</td>
+                    <td>   1</td>
+                    <td>This pattern is present only in long range mode when object/ obstacle is within the distance of 2-3 meters (i.e. 6-7 footsteps away from the person walking with the SmartCane). This pattern is not present in short range mode because in that mode SmartCane obstacle detection range is limited to only 1.8 m)</td>
+                </tr>
+                <tr>
+                    <td>Two vibrations pulses with a small gap repeated every second after a pause</td>
+                    <td>   2</td>
+                    <td>This pattern starts when an object / obstacle is within a distance of:
+                        1-2 meter for long range mode and1-1.8 meter for short range mode.(i.e. 4-5 footsteps away from the person walking with the SmartCane)</td>
+                </tr>
+                <tr>
+                    <td>Fast repeating vibration pulses</td>
+                    <td>   3</td>
+                    <td>This pattern starts when an object / obstacle is within a distance of 0.5 -1 meter for both  long range as well as short range mode.
+                        (i.e. 2-3 footsteps away from the person walking with the SmartCane</td>
+                </tr>
+                <tr>
+                    <td>Very fast repeating vibration pulses</td>
+                    <td>   4</td>
+                    <td>This pattern starts when an object / obstacle is at a distance of less than 0.5 meter for both  long range as well as short range mode.
+                        (i.e. 1-2 footsteps away from the person walking with the SmartCane)</td>
+                </tr>
+
+
+            </table>
+
+            </p>
+            <p>INTERACTIVE TASK:</p>
+               <p> 1.	Educate your trainee about these vibration patterns and the corresponding distance of obstacles or objects and take him/her to a place free from any obstacles or objects.
+                2.	Move away from him/her to a distance of more than 3 metres.
+                3.	Ask him/her to turn ON the SmartCane device in long range mode and hold it straight. Ensure that the sensors are pointing towards you. Device will not vibrate as there are no objects around and you are also at a distance of more than 3 metres
+                4.	Slowly start moving towards the user.
+                a.	Once your distance from the user is 3 metres, user’s device will start vibrating.
+                b.	 At this point, stop and let the user understand this vibration pattern.
+                c.	Explain this vibration pattern by making similar sound with your hands.
+                d.	Inform the user about your distance. Also provide this distance information in terms of number of foot-steps.
+                5.	Move a few foot-steps towards the user and repeat the above steps for the remaining vibration patterns also.
+                6.	Repeat this exercise, but this time once the device starts producing the first vibration pattern, stop and ask your trainee to change the mode button to short range mode. Immediately, the device will stop vibrating as the detection range has reduced. Explain this point to him/her and then continue.
+
+            </p>
+        </div></div>
+
+
+
+        <div class="card6" id="battery">
+            <h3>SMARTCANE BATTERY CHARGING</h3>
+            <a target="blank">
+                <iframe width="320" height="180"
+                        src="https://www.youtube.com/embed/BFtNoAWbeLE?controls=1">
+                </iframe></a>
+            <div>SmartCane's Battery Charging Video</div>
+            <p>PURPOSE:</p>
+               <p> To learn the battery status beeps, low battery warning beeps and how to charge the SmartCane device
+
+               <p> FACTS:</p>
+                <p>BATTERY STATUS</p>
+                <p>SmartCane device runs on lithium-polymer rechargeable battery which can be recharged using the charger that comes with it just like your mobile phone. It takes around 4 hours to completely recharge the device. Once fully charged, it can work for approximately 8 hours even if it is continuously vibrating.
+                It is very easy for anyone to determine the remaining battery charge level just by turning ON the device in long range mode. Once turned ON it gives a certain number of beeps and vibrations to indicate the battery charge level to the user:
+                3 beeps with 3 vibrations indicate: battery charge level is more than 70%
+                2 beeps with 2 vibrations indicate: battery charge level is between 30- 70%
+                Single beep with single vibration indicate: battery charge level is less than 30%
+                These patterns of beeps and vibrations will come when the device is turned ON in long range mode. However, in short range mode there are only vibrations and no beeps to convey the battery status. This provides the SmartCane user with the flexibility of turning it ON silently without creating any disturbance.
+
+</p>
+               <p> BATTERY CHARGING</p>
+               <p> To charge the SmartCane device, just plug in the charging point of the accompanying charger in the charging port of the device. This charging port is provided with the sliding shutter for protection from dust and water.
+                If the device is ON and the charger is connected, the device will enter the charging mode and will start giving two beeps that repeat every 60 seconds informing the user that charging is going on. If the device is ON, but not giving the charging beeps, then it means that the power source is not properly connected. Once the battery gets fully charged, the device will start giving a long beep to indicate that the charging process is complete.
+                The device can be charged silently by charging it in OFF condition. One can turn ON the device to know the battery status at any point of time.
+</p>
+               <p> LOW BATTERY WARNING SIGNALS</p>
+                <p>If the battery charge level goes below 30% while using the device, it will continue to function normally. It will start producing a short beep which is repeated every 60 seconds as a low battery warning signal. In such a situation you should charge the device immediately. In case the device is not charged and is continued to be used, it will give four short beeps with four vibrations to indicate the deep discharge condition. After giving these beeps it will enter the sleep mode and stop functioning. However, after recharging it will start functioning normally.
+
+
+            </p>
+            <p>INTERACTIVE TASK:</p>
+               <p> -	Guide your trainee to locate and identify the charging slot.
+                -	Help him/her to slide the shutter.
+                -	Ensure that the user is able to charge the device on his own.
+                -	Explain charging beeps and low battery warnings to your trainee.
+
+
+            </p>
+        </div></div>
+
+
+        <div class="card7" id="avoid">
+            <h3>OBSTACLE AVOIDANCE AND PATH FINDING</h3>
+            <a target="blank">
+                <iframe width="320" height="180"
+                        src="https://www.youtube.com/embed/BFtNoAWbeLE?controls=1">
+                </iframe></a>
+            <div>SmartCane's Obstacle Avoidance and Path Finding Video</div>
+            <p>PURPOSE:</p>
+                <p>To learn how to start using the SmartCane vibration patterns for obstacle avoidance and path finding in a natural controlled environment.</p>
+                <p>FACTS:</p>
+               <p> SmartCane device is meant to be used for the detection of knee to head high obstacles which are difficult to detect with the white cane. Once such obstacles are detected by the device, a SmartCane user can avoid or negotiate them from a safe distance by making use of the following vibration patterns:
+                Awareness Zone – If first vibration pattern is active, it only means there is something at a distance of 3 meters i.e. at least 6-7 steps away and may not come in path necessarily. In such a situation, one should continue walking confidently without taking any corrective action.
+                Action Zone – While walking, if the vibration pattern changes to second then it means that the obstacle or object is now within a distance of 1-2 meters from the user and there is a high probability that it will obstruct his/her path. This is the point where one should start moving left or right to search for an obstacle free path (where either there are no vibrations or at least lesser vibrations) and try to negotiate and avoid the obstacle/object from a safe distance without making any contact with it.
+                Danger Zone – If the vibration pattern changes to third then it means that the obstacle is within a distance of 0.5 to 1 meter from the user. By this time the cane should collide with the obstacle. If the cane is not making contact with anything but it is vibrating in pattern three then it surely indicates an overhanging obstacle. At this point one should continue to find the free path and also take the upper hand/arm protection to avoid any injury.
+                Stop Zone – If vibration pattern is fourth then it means that the obstacle is at a distance of less than half a meter. One should stop immediately to avoid collision and may take a few steps back and continue finding the free path. If one doesn’t stop at this point then it may happen that the obstacle will move out of the view of SmartCane sensors and the device will stop vibrating. The user might interpret this as an absence of obstacle which may result in injury.
+                Note: It is advised to switch to short range mode in crowded areas because if the device is used in long range mode then it may vibrate continuously due to presence of people/ objects around.
+
+            </p>
+            <p>INTERACTIVE TASK:</p>
+               <p> 1.	Educate the user about using these zones for avoiding and negotiating obstacles safely.
+                2.	Basic obstacle detection, avoidance and path finding.
+                a.	Place 4-5 simple obstacles like chairs, tables etc. separated by a distance of more than 3 metres from each other.
+                b.	Walk along with the user and guide him/her to negotiate these obstacles from a safe distance by making appropriate use of vibration patterns.
+                c.	On successful avoidance of each object, explain what he/she has avoided and from how far, by making him/her touch it.
+                d.	Now let the user walk alone under your supervision and come in his/her path several times and let him/her negotiate you from a safe distance.
+                e.	Keep observing the user and correct whenever required.
+                f.	This will give confidence to your trainee that he/she can avoid people, objects etc. without colliding or making any physical contact, just within 10-15 minutes of your training.
+                3.	Overhanging obstacle detection and avoidance
+                a.	Make your trainee walk alone and bring your arm in front of him/ her from side while he is walking
+                b.	Keep changing the level of your arm from knee to head height and also the distance and guide him/her on how to avoid such overhanging or protruding obstacles.
+                c.	Reinforce till your trainee starts following techniques required for detecting and safely avoiding such obstacles.
+                d.	Now repeat this process with the natural hanging and protruding obstacles like tree branches, open windows, banner posts etc. under your supervision.
+
+            </p>
+        </div></div>
+        <div class="card8" id="fast">
+            <h3>DETECTION OF FAST APPROACHING OBJECTS</h3>
+            <a target="blank">
+                <iframe width="320" height="180"
+                        src="https://www.youtube.com/embed/YuSEBSUglyU?controls=1">
+                </iframe></a>
+            <div>SmartCane's detection of fast approaching objects Video</div>
+            <p>PURPOSE:</p>
+               <p> To learn how SmartCane conveys the information about the fast moving objects</p>
+
+               <p> FACTS:</p>
+                <p>While operating, if the SmartCane device encounters a fast approaching object like a car, bus, cycle or a fast walking person in its detection range, it will produce a continuous beep as long as this object remains within the detection range.
+                Several users have mentioned that this feature may be beneficial as it prevents sudden collisions with fast approaching obstacles without warning. It is very useful in detecting the approaching vehicles while reversing. This feature is implemented as a cautionary feature and the user may not be able to take corrective action due to very limited reaction time which in turn, is dependent on the speed of approaching objects.
+
+
+
+            </p>
+            <p>INTERACTIVE TASK:</p>
+                <p>1.	Explain this feature to your trainee
+                2.	Demonstrate this feature as follows:
+                a.	Make your trainee stand in open with SmartCane device held in normal position.
+                b.	Move away from him/her at a distance more than 3 m.
+                c.	Start walking briskly towards your trainee in the direction of SmartCane sensors.
+                d.	SmartCane device will start beeping informing your trainee that you are quickly moving towards him/her.
+
+
+            </p>
+        </div></div>
+<div class="card9" id="attach">
+    <h3>WHITE CANE ATTACHMENT AND DETACHMENT</h3>
+    <a target="blank">
+        <iframe width="320" height="180"
+                src="https://www.youtube.com/embed/YuSEBSUglyU?controls=1">
+        </iframe></a>
+    <div>SmartCane's detection of fast approaching objects Video</div>
+    <p>PURPOSE:</p>
+           <p> To learn to detach and attach the SmartCane device from the white cane.</p>
+
+            <p>FACTS:</p>
+            <p>White cane on which the SmartCane device is fitted may break over a period of time but one has the flexibility to replace this damaged white cane by fitting the SmartCane device on another compatible white cane. These compatible canes are easily available at the SmartCane distribution centers.
+            When the SmartCane device is held normally with sensors pointing away from the body, there are 2 buttons on the right side cross-section of the grip (the side from where strapping elastic of white cane comes out). When these are pressed simultaneously, the grip part of the device gets opened up in 2 halves just like the pencil box. Guiding embossed lines are present near both these buttons for easy identification.
+            To detach the device from the old white cane, one first needs to press these buttons simultaneously to open the grip into two halves so that the damaged old white cane can be taken out.
+            To attach the device on the compatible white cane, one needs to place this white cane in the open device grip such that its top bulb sits properly in the cavity provided in the device grip and the strapping elastic comes out from the small cut near the middle part of the device grip. Once the cane is properly placed, one can fold the second half and press against the first half of the device grip. Click sound due to proper locking of buttons is indicative of correct operation.
+            Please note that if the white cane placement is not done properly with the string coming out from an incorrect position then the forced grip closing (attachment process) may result in breakage of grip joints.
+
+
+
+    </p>
+    <p>TASKS FOR YOU:</p>
+        <p>1.	Explain this feature to your trainee.
+        2.	Help him/her identify these grip locking buttons with the help of guiding lines
+        3.	Demonstrate the process of attachment and detachment of the device
+        4.	Let him/her do it on his own.
+
+
+    </p>
+</div></div>
+        <div class="card10" id="safety">
+            <h3>KEY POINTS FOR SAFE AND INDEPENDENT MOBILITY WITH SMARTCANE</h3>
+            <p> •	Using the device effectively in day to day mobility requires regular practice and usage.</p>
+             <p>   •	Always follow the white cane mobility techniques for detecting and negotiating objects that are at ground or below knee height and use the device vibration patterns for objects that are above your knee. Initially, you may take time to synchronize between the two but after a few days of practice it should come naturally to you.</p>
+              <p>  •	The SmartCane device is capable of reliably detecting the obstacles that come within the detection zone of the sensors but actual detection also depends on effective mobility techniques, especially the white cane tapping. Always tap your cane within your shoulder limit with SmartCane sensors pointing in front to ensure realiable detection of the obstacles in your way.</p>
+              <p>  •	While using the device in crowded places, the short range mode is recommended. This will reduce the detection range to 1.8 meter in front of you. However, if you continue operating in the long range mode, the device would continuously vibrate due to the numerous objects / people within 3 meters.</p>
+               <p> •	There may be an initial adaptation phase while learning the use of the device. During this time your  walking speed might reduce slightly due to increased focus on vibrations. However, with regular practice, you are likely to get accustomed to these vibratory patterns and be able to walk at your regular or increased speed.The detection of fast moving obstacles is done within the range of 3 meters only. This feature is only intended as a cautionary alarm and you may not be able to fully move out of the way.</p>
+               <p> •	If there is a significant difference in the length of your old white cane and the cane on which SmartCane device is mounted, then you may experience some undue pain or discomfort in your wrist. In such a case, get the cane replaced with a compatible white cane of appropriate length available from a SmartCane distribution center. Please note that the replacement would be subject to availability of an appropriate cane.</p>
+
+            <div class="card11" id="faq">
+               <h3>FREQUENTLY ASKED QUESTIONS (FAQ)</h3>
+
+                <p>Q1. How does the SmartCane device detect objects without coming in contact with them?</p>
+               <p> The SmartCane device has ultrasonic sensors that are used for detection. These sensors transmit and receive ultrasonic waves, there are sound waves at a frequency beyond the human hearing range. When an obstacle comes in the path of these waves, they are reflected back and are detected by the sensor. On detection of any obstacle, the device produces vibrations to indicate the presence of that obstacle.</p>
+
+               <p> Q2. Why are there two modes (short range and long range modes) of detection available in the SmartCane device?</p>
+                <p>Generally, in an indoor environment objects are usually close to the user. While, in an outdoor setting, objects are usually present at greater distances. Therefore, while moving around in an open environment, a longer range will be useful for detection and in a closed environment the short range mode will be useful. It is important to select the appropriate mode for optimal usage. For instance, if you are navigating in an indoor environment with the device set in long range mode, the device will vibrate continuously due to numerous nearby obstacles. Similarly, if you are navigating outdoors with the device set in the short range mode, you will detect the presence of an obstacle only upon it coming closer than1.8 meter.</p>
+
+               <p> Q3. Why do I need to set the angle of the sensors?</p>
+                <p>The sensor angle adjustment mechanism allows optimal usage by persons with different heights and cane holding styles. The sensor angle determines the direction of the ultrasonic rays that are emitted in the form of a cone. If the cone is tilted downwards, it would continuously detect the floor. If the cone is directed highly upwards then it will not be able to detect knee to head-high obstacles. Therefore, it is essential to set the sensor angle at a position such that the sensors face towards the chest of a person standing in front of you at a distance of 2 meters. This setting will help the sensor detect objects at heights between your knee and head height.</p>
+
+               <p> Q4. Why does my device beep and / or vibrate on switching it ON?</p>
+               <p> When the device is turned on, the initial beeps / vibrations indicate the level of charge remaining in the battery. A single vibration indicates that the battery is low (less than 30 %), two vibrations indicate that the battery is moderately charged (30-70%) and three vibrations indicate that the device is almost fully charged (70% - 100%). Please note that the vibrations are accompanied with beeps in the long range mode.</p>
+
+               <p> Q5. Is the SmartCane device a replacement of the white cane?</p>
+                <p>The SmartCane device is not a replacement for your white cane. Instead, it compliments and enhances its use by detecting raised obstacles, thereby increasing safety. Tapping of the cane according to the correct mobility technique must be continued for detection of ground level obstacles.</p>
+
+               <p> Q6. Can I use the SmartCane device without attaching it to the white cane?</p>
+                <p>Yes, you can use the device without attaching it to a white cane if you are walking in a familiar place where you usually do not use the white cane. The device still works and helps you detect obstacles which appear within the ultrasonic cone range. Please note that the device does not detect obstacles below the knee-level. Hence, it is always recommended to use the SmartCane device along with the white cane.</p>
+
+                <p>Q7. Can I use SmartCane device during rain?</p>
+                <p>The SmartCane device uses ultrasonic waves which are so sensitive that they may even detect rain water droplets. Hence, during heavy rain the device may vibrate due to rain droplets. However, this may not happen during light rain. Hence, the use of the device is not recommended during rain as the detection functionality may be uncertain. The device can be used again once the rain stops.</p>
+
+               <p> Q8.What protection needs to be taken if it rains while I am using this device?</p>
+                <p>You can switch off your device, detach it from the white cane and keep it safely.  Water seepage will not damage your device. However, when the water droplets reach inside the sensors, the sensors may not be able to sense the obstacles properly. Once, the water in the sensors dries up, the device can be used again.</p>
+
+                <p>Q9. Can the SmartCane device be used in detecting a change in the surface level like a staircase or main halls?</p>
+               <p> As discussed earlier, the SmartCane device detects knee-above obstacles. The device cannot be used for detecting change in surface level for example staircases, main halls etc. where the white cane technique will be more useful than the SmartCane device.</p>
+
+               <p> Q10. Does the device identify the type or nature of the obstacles that are being detected?</p>
+                <p>The purpose of the SmartCane device is to detect the presence of any obstacle from a safe distance. It does not recognize the type of the obstacle. However, after detecting the presence of an obstacle through vibrations, the user can then come closer in a safe way and identify the obstacle with her/his white cane to confirm if it is a landmark of interest.</p>
+
+              <p>  Q11. Do I need to replace the batteries of the device?</p>
+                <p>You do not need to replace the batteries. The device uses a re-chargeable battery similar to the one used in mobile phones. It can be charged simply by connecting the charger provided in the package. Battery will be replaced only at the manufacturer's authorized service centers.</p>
+
+                <p>Q12. How long will the device work if the device was fully charged?</p>
+               <p> A fully charged battery can last 8 hours of continuous use. For instance, if a person uses this device for  approximately 1.5 hours every day then the device can be used for a week without recharge (1.5*7 days = 10.5 hrs > 8 hrs). Note that the device takes 4 hours to get fully charged.</p>
+
+               <p> Q13. Why does my device beep occasionally when on road?</p>
+                <p>The device beeps when a fast moving object approaches the user from the front. The object can be a person walking on the side walk, a car, a bicycle or a truck. As with other SmartCane features, this will require some training to become habitual. Please continue following other safety precautions you normally observe during independent cane mobility.</p>
+               <p> Q14. How would I differentiate between the beep sounds for detecting fast approaching obstacles and the ones indicating low battery state?</p>
+               <p> When the device detects a fast approaching object, it generates a beep sound whose duration depends on the time for which it remains in the detection range of the device. This is different from the low battery beep signal which is of a very short duration and which repeats every 60 seconds.</p>
+
+                <p>Q15. Can I use my existing cane with this device?</p>
+                <p>Yes, you can use your existing cane with the SmartCane device after some simple modifications provided it conforms to the diameter specifications of the device. However, it is recommended to use the cane that comes with the SmartCane device.</p>
+
+               <p> Q16. What should I do if the length of the cane that came attached is not appropriate as per my requirements?</p>
+                <p>The length of the cane that comes with the device is chosen such that it meets the requirement of most users. However, if there is a significant difference in the length of your white cane and the one that comes with the device then you should inform the local organization or center from where you purchased the device. Subject to availability, the center may provide an appropriate replacement for the white cane.</p>
+
+                <p>Q17. In case my cane breaks or if I wish to change my cane, can I replace it without purchasing a new SmartCane device?</p>
+               <p> Yes, the old cane can be easily detached from the device and a new compatible cane of the same type can be put in its place.</p>
+
+                <p>Q18. I use white cane that is fine for my mobility needs, then why do I need this device?</p>
+                <p>The SmartCane device complements and enhances the functionality of the regular white cane. The device is able to detect raised knee-above obstacles like sides of a vehicle etc. that cannot otherwise be detected by the white cane. The device detects the presence of obstacles much before coming in contact and indicates the distance through vibrations. This prevents dangerous collisions and allows the person to navigate around the obstacle. Overall, the device improves safety and reduces anxiety of unexpectedly colliding with an obstacle in the user’s path. In many cases, the device prevents unwanted collision with other people, garbage dumps etc. that may be socially awkward. Users have also reported that they travel faster on the road with a sense of greater confidence. Apart from its detection functionality, the device is lightweight, has an ergonomic grip, fits on the white cane and is easy and intuitive to use, particularly with a fully accessible interface.</p>
+
+               <p> Q19. What is the weight of the device? Is it too heavy to hold and use?
+                <p>The SmartCane device is lightweight with a total weight of only 132 grams (excluding the white cane). Initially, it may take some time and practice to become habitual with the new handle shaped device (with a small additional weight) mounted on top of the cane. During our extensive studies, users have been observed to be comfortable using the device regularly for extended.</p>
+
+                <p>Q20. How long does it take to become a confident SmartCane user?
+                <p>It does not take very long to learn this device. With initial learning and regular practice you will start observing the utility of the device in your mobility. This will be apparent when you begin moving independently while negotiating knee-above obstacles from a distance and navigating with grace. Some users are able to reach this stage in a few days while others may require 1 to 2 weeks. Usually, after 3 to 4 weeks of regular use you can become a fully confident SmartCane user. However, please note that this depends on carefully observing the usage guidelines and regular practice.</p>
+
+                <p>Q21. Are the ultrasonic waves emitted from the device safe?
+                <p>The SmartCane is CE marked and meets International safety standards. It uses a safe ultrasonic sensor at an intensity much below its rating. We have also tested it in the field for many hours to assess any discomfort to other users, animals etc. and found no adverse results. It can be safely used according to the methods and situations prescribed in the manual.</p>
+
+               <p> Q22. Will the vibratory responses from the device cause any harm to the touch sensitivity of my hand?
+                <p>We have calibrated the vibration levels to be safe for continuous use – much like that of a cell phone. Each individual is different and it may take longer for some to get used to the vibrations. Our users have not observed any change in touch sensitivity due to prolonged use.</p>
+
+                <p>Q23. Will my SmartCane device withstand falling on the ground?
+               <p> The SmartCane device has been designed to withstand occasional and accidental drops. However, the ultrasonic sensors are sensitive and may be affected by falling. They have been protected in the device against the mechanical shocks and regular wear and tear during normal usage. The device has a self-check feature to ensure the sensors are functioning. If the user drops the device, it is important to check for any sensor malfunction alarms before operating the SmartCane. Instructions for this are in the user manual and given during training.</p>
+
+               <p> Q24. The device vibrates constantly when I use it in a crowded environment leaving me irritated and confused. What should I do in such a situation?</p>
+                <p>The device provides obstacle information through vibratory responses.  When you are walking in a busy or a crowded street you may constantly encounter obstacles and hence, the device keeps on vibrating. As it is unlikely to experience any critical waist high obstacle when walking in the crowd, you can simply switch the device off for some time and use the SmartCane like a regular white cane. You can switch it on again when needed.</p>
+
+</p>
+
+            <div class="card12" id="ux">
+                <h3>SMARTCANE USER'S EXPERIENCES</h3>
+               <p> A large number of users have participated in the development of the SmartCane device. They find it highly effective in detecting knee above objects/obstacles like underside of parked vehicles, overhanging and protruding objects like tree branches, air conditioners, open window panes, banner posts etc…. Some of most common objects / obstacles detected by SmartCane users while using the device in their own environments are listed in the following table:</p>
+               <p> •	Parked vehicles- bikes, scooters, auto rickshaws, cars etc</p>
+               <p> •	Underside of luggage carriers, trucks, buses etc</p>
+                <p>•	Tree trunk and branches</p>
+               <p> •	Street animals like cow etc</p>
+                <p>•	People- walking as well as standing</p>
+                <p>•	Gates and glass doors</p>
+                <p>•	Open windows panes	•	Protruding AC, coolers</p>
+                <p>•	Railings and horizontal bars</p>
+                <p>•	Cloth drying ropes and strings</p>
+                <p>•	Electric poles and low hanging wires</p>
+                <p>•	Hanging banners, hoardings, sign boards</p>
+                <p>•	Tables and chairs</p>
+                <p>•	Dustbins</p>
+                <p>•	Big flower pots or plants</p>
+
+               <h3> They also find the device helpful in improving their dignity and self- respect by often helping them avoid socially awkward situations. The device has been used by these users in a number of scenarios and its usage has benefitted them in following ways:</h3>
+
+               <p> Collision and Injury Prevention:
+                Satguru Rathi from Delhi says: “The SmartCane device is very beneficial. It protects me from a lot of upper body injuries which I earlier used to encounter on a daily basis while using the regular White cane.”
+                Khalid from J&K shares: "Now there is a lot of relief, with SmartCane we can detect objects from a safer distance and prevent ourselves from getting injured. Now, I am able to detect a lot of obstacles on pavements of this city like tree branches etc. Due to the vibratory responses from the device, now we are able to feel the presence of other objects in the surrounding. Earlier we walked with the fear of getting injured especially in the eye or head."
+                Ketan from Ahmedabad says: "It is a very useful device because earlier with a regular cane, I quite often collided with vehicles like truck, tractor or bus. This was because my cane would pass beneath these big vehicles and I would collide abruptly. I have got injuries on my forehead due to such incidents.  With this device I get pre warning of such dangerous obstacles through vibrations. This also helps me in detecting street animals like cow.”</p>
+              <p>  Increased safety:
+                A user from Ahmedabad said: “With the use of this device, we get to know about any raised obstacle coming in our way and hence we change direction and walk uninterrupted.”
+                Ketan from Ahmedabad says, "Since the time I have started using Smart cane I am not getting injured anymore. My safety in travel has increased by a great deal.”</p>
+               <p> Improved confidence:
+                A 15 year old girl from Delhi says: “When I have the SmartCane in hand, I feel confident, it feels that I can walk alone without anybody’s help.”
+                Another person from Delhi says: “It builds confidence. Now we no more get into any embarrassing situation by bumping into people while walking.”
+                Manju from Mumbai shares a similar incidence: “My initial experience with the white cane was like gosh! And now with Smart cane it’s like wow. I walk faster and I am more confident now. Just one word for the device, it’s wonderful.”
+                Khalid from J&K shares: “Earlier, I was apprehensive of colliding with any waist-above obstacles and feared of bumping into people. But now with timely vibratory responses from SmartCane, I get to know about the presence of any object or person from a distance. My stick does not bang with any one and it feels good.”</p>
+            <p>
+                Increased participation and inclusion:
+                People also shared that dependency on other have greatly reduced. The device has enhanced their self-esteem. Owing to which they now freely participate in community and other formal gatherings.
+                Indirani from Mumbai says: “It feels great to be able to move around alone. I no more take help from people to move around.  I now enjoy being all by myself. Family and friends now have the confidence in me that I can travel independently without getting hurt or injured.”</p>
+               <p> Increase in regular walking speed:
+                A university student Deepak from Mumbai says: "My walking speed has increased. Whenever there is an object on my path I walk cautiously by estimating the distance through the vibratory responses from the device.  And when there are no vibratory responses I walk faster and confidently.”
+                Amit and Satguru from Delhi say: “ Our travel time to work has decreased with the use of this device. We walk faster now.”</p>
+                <p>Detecting and finding passage between people:
+                Indirani from Mumbai says: “I have very limited vision and can perceive things only during the day time. I face major mobility issues when it gets dark. I had quite often collided with people who would be standing quietly on pavements and bus stops. But since the time I am using this device, I detect people standing on my path. Now, so many times it happens that upon detecting people I instantly say ‘excuse me’ and move with grace. This leaves them in total amazement.”
+                Ramana from Bangalore says: “The device allows me to detect and find path particularly when people are standing in a group.”</p>
+                <p>Moving in a park:
+                A 17 year old Prachi from Delhi says: “I am enjoying using the device. Now I am able to walk in parks as the SmartCane device is able to inform me about the benches and the tree branches which were impossible to detect earlier with the white cane.”</p>
+                <p>
+                Movement in crowded places:
+                Manikandan from Chennai says: “The device is very useful. I used the device inside the railway station. I even detected baggage lying on the floor in the train with the device and prevented from getting toppled. I had a safe journey to Kerala using the device.”</p>
+               <p> Queue following:
+                Dipendra Manocha from Delhi says: “I am able to maintain a regular distance from the person in front of me in the queue and know when I have to move forward when the vibrations pattern change. I am able to avoid poking the person in front of me with my cane.”
+                Similarly, Sam Taraporevala from Mumbai shares that, “Apart from being extremely helpful in detecting obstacles ahead, the device is fun to use. I walk with my friends while chatting with them. I do not hold their hands to maintain pace. I simply switch my device on and follow the vibratory patterns to walk behind them by easily maintaining an arm distance.”</p>
+                <p>Gate finding:
+                Satguru from Delhi shares: “At my office, I have to locate the door to my cabin every morning. The door is open most of the times however a person with visual impairment like me needs to trail along the wall to reach to the door. I use the SmartCane device to find the door. The device stops vibrating upon reaching the open door and I very easily enter through it without making any contact with the door or the wall.”</p>
+                <p>Detection of glass panes:
+                Jyoti from Mumbai says: “I have very limited vision. Earlier, I had trouble in detecting glass doors in the shopping malls.  I would often collide which led to a lot of embarrassment. Now, this is no more the case, with Smart cane I successfully detect glass doors and prevent from such disgraceful instances.”</p>
+               <p> Fast approaching obstacle detection:
+                Pranav from Delhi shares: “It is nice to have a device which give you that extra bit of information even though when it is just a probability. One day I was standing with the SmartCane waiting for my car to come. The collision alarm triggered while the driver drove past me. I immediately got to know that he came close and there was something to watch out for.”
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <h5>Contact Us for More Details</h5>
+</div>
+
+</body>
+</html>
+
+
+
+
+

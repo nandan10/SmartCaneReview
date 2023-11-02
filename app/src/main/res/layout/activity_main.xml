@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="16dp"
+    android:textAlignment="textStart"
+    tools:context="com.example.smartcanedebug.MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:contentDescription="Smartcane home page"
+            android:text="SMARTCANE"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cd1"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:onClick="onClick1"
+            android:padding="@dimen/cardview_default_elevation"
+            app:cardBackgroundColor="#30302e"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                >
+
+                <ToggleButton
+                    android:id="@+id/toggleButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="#30302e"
+                    android:contentDescription="connect to smartcane"
+                    android:onClick="onClick1"
+                    android:textAlignment="center"
+                    android:textOff="CONNECT"
+                    android:textOn="DISCONNECT"
+                    android:textSize="18dp" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/ImageView"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:scaleType="fitStart"
+
+
+                android:src="@drawable/img22" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+
+            android:id="@+id/cd8"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:onClick="onClick8"
+            android:padding="@dimen/cardview_default_elevation"
+            app:cardBackgroundColor="#30302e"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            </RelativeLayout>
+
+            <ImageView
+
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:scaleType="fitStart"
+
+
+                android:src="@drawable/img23" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
+                android:contentDescription="location"
+                android:scaleType="fitCenter"
+                android:text="WHERE AM I?"
+                android:textAlignment="center"
+
+                android:textColor="@color/white"
+                android:textIsSelectable="false"
+                android:textSize="18dp" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+
+            android:id="@+id/cd15"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:onClick="onClick15"
+            android:padding="@dimen/cardview_default_elevation"
+            app:cardBackgroundColor="#30302e"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            </RelativeLayout>
+
+            <ImageView
+
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:scaleType="fitStart"
+
+
+                android:src="@drawable/img_2" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="40dp"
+                android:contentDescription="TRAINING"
+                android:scaleType="fitCenter"
+                android:text="TRAINING"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textIsSelectable="false"
+                android:textSize="18dp" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.cardview.widget.CardView
+
+                android:id="@+id/cd9"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                android:onClick="onClick9"
+                android:padding="@dimen/cardview_default_elevation"
+                app:cardBackgroundColor="#30302e"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp"
+
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                </RelativeLayout>
+
+                <ImageView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:scaleType="fitStart"
+
+
+                    android:src="@drawable/img_21" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="85dp"
+                    android:layout_marginTop="40dp"
+                    android:contentDescription="battery status"
+                    android:scaleType="fitCenter"
+
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+
+                    android:textIsSelectable="false"
+                    android:textSize="18dp" />
+
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+
+                android:id="@+id/cd7"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                android:onClick="onClick7"
+                android:padding="@dimen/cardview_default_elevation"
+                app:cardBackgroundColor="#30302e"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></RelativeLayout>
+
+                <ImageView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:scaleType="fitStart"
+
+
+                    android:src="@drawable/img_12" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="85dp"
+                    android:layout_marginTop="40dp"
+                    android:contentDescription="debug"
+                    android:scaleType="fitCenter"
+
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+
+                    android:textIsSelectable="false"
+                    android:textSize="18dp" />
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+
+                android:id="@+id/cd4"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                android:onClick="onClick4"
+                android:padding="@dimen/cardview_default_elevation"
+                app:cardBackgroundColor="#30302e"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></RelativeLayout>
+
+                <ImageView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:scaleType="fitStart"
+
+
+                    android:src="@drawable/img_18" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="40dp"
+                    android:contentDescription="emergency sms"
+                    android:scaleType="fitCenter"
+
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+
+                    android:textIsSelectable="false"
+                    android:textSize="18dp" />
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cd5"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                android:onClick="onClick5"
+                android:padding="@dimen/cardview_default_elevation"
+                app:cardBackgroundColor="#30302e"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></RelativeLayout>
+
+                <ImageView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/img21" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginTop="40dp"
+
+                    android:contentDescription="emergency call"
+                    android:scaleType="fitCenter"
+
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textIsSelectable="false"
+                    android:textSize="18dp" />
+
+
+            </androidx.cardview.widget.CardView>
+        </TableRow>
+
+    </LinearLayout>
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:backgroundTint="@color/black">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation3"
+            app:itemIconSize="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            app:itemIconTint="@drawable/selector"
+            app:itemTextColor="@drawable/selector"
+            app:menu="@menu/menu_navigation2" />
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.smartcanedebug.ReportIssue"
+    android:padding="10sp"
+    >
+
+    <!-- on below line we are creating a text for heading of our app -->
+    <TextView
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/ic_back_arrow"
+        android:contentDescription="go back"
+        android:onClick="goBackPressed"
+        android:textColor="#000000" />
+
+
+
+    <TextView
+        android:id="@+id/idTVHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:text="REPORT ISSUE"
+        android:textAlignment="center"
+        android:contentDescription="report issue"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <!-- on below line we are creating a spinner -->
+
+    <Spinner
+        android:id="@+id/idLanguageSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:contentDescription="select"
+        android:padding="40dp" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:padding="10dp"
+
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:layout_gravity="center"
+        >
+
+        <EditText
+            android:id="@+id/Others"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="10dp"
+            android:hint="Others"
+
+            />
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="260dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:padding="10dp"
+        app:cardBackgroundColor="#EBE2E2"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:layout_gravity="center"
+        >
+
+        <Button
+            android:id="@+id/Submit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="SUBMIT"
+            android:textColor="@color/black"
+            android:backgroundTint="#EBE2E2"
+            android:textSize="18dp"
+            android:contentDescription="submit"/>
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

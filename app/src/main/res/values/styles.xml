@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppCompatAlertDialogStyle">alert</style>
+
+    <style name="Theme_D1NoTitleDim">themed1</style>
+
+    <style name="ThemeOverlay_Material_Light">light</style>
+
+
+        <!-- Base application theme. -->
+        <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
+            <!-- Customize your theme here. -->
+
+
+            <item name="colorAccent">@color/colorAccent</item>
+            <item name="colorPrimary">@color/cream</item>
+            <item name="colorPrimaryVariant">@color/peach</item>
+            <item name="colorOnPrimary">@color/white</item>
+            <!-- Secondary brand color. -->
+            <item name="colorSecondary">@color/teal_200</item>
+            <item name="colorSecondaryVariant">@color/teal_700</item>
+            <item name="colorOnSecondary">@color/black</item>
+            <!-- Status bar color. -->
+            >
+
+        </style>
+
+    </resources>
+

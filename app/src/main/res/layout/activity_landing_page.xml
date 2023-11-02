@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/landingPageView"
+    android:orientation="horizontal">
+
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="match_parent"
+        android:layout_height="340dp"
+        android:layout_gravity="center"
+        android:foreground="@drawable/img_22"
+        android:onClick="gotoMainActivity"
+        android:contentDescription="Welcome to SmartCane-App"
+
+        />
+
+</LinearLayout>

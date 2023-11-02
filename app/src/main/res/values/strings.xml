@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">SmartCaneDebug</string>
+
+    <string-array name="output_type_array">
+        <item>None</item>
+        <item>Haptic</item>
+        <item>Buzzer</item>
+        <item>Both</item>
+    </string-array>
+
+    <string-array name="output_pattern_array">
+        <item>None</item>
+        <item>Beginner</item>
+        <item>Regular</item>
+        <item>Custom</item>
+    </string-array>
+
+    <string-array name="distance_zone1_array">
+        <item>1a</item>
+        <item>1b</item>
+        <item>1c</item>
+        <item>1d</item>
+    </string-array>
+    <string-array name="distance_zone2_array">
+        <item>2a</item>
+        <item>2b</item>
+        <item>2c</item>
+        <item>2d</item>
+    </string-array>
+    <string-array name="distance_zone3_array">
+        <item>3a</item>
+        <item>3b</item>
+        <item>3c</item>
+        <item>3d</item>
+    </string-array>
+    <string-array name="distance_zone4_array">
+        <item>4a</item>
+        <item>4b</item>
+        <item>4c</item>
+        <item>4d</item>
+    </string-array>
+
+    <string-array name="navi_fwd_array">
+        <item>f1</item>
+        <item>f2</item>
+        <item>f3</item>
+        <item>f4</item>
+    </string-array>
+    <string-array name="navi_stop_array">
+        <item>s1</item>
+        <item>s2</item>
+        <item>s3</item>
+        <item>s4</item>
+    </string-array>
+    <string-array name="navi_left_array">
+        <item>l1</item>
+        <item>l2</item>
+        <item>l3</item>
+        <item>l4</item>
+    </string-array>
+    <string-array name="navi_right_array">
+        <item>r1</item>
+        <item>r2</item>
+        <item>r3</item>
+        <item>r4</item>
+    </string-array>
+
+</resources>

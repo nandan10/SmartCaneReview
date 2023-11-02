@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10sp"
+    >
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="160dp"
+        android:layout_marginLeft="20dp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        app:cardBackgroundColor="#30302e"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        >
+
+        <!-- Button to request permissions -->
+        <Button
+            android:id="@+id/RequestPermission"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:backgroundTint="#30302e"
+            android:contentDescription="Please enable Bluetooth and GPS services to continue."
+            android:text="Please enable Bluetooth and GPS services to continue."
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

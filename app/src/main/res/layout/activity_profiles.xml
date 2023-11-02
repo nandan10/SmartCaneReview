@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    >
+
+    <TextView
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/ic_back_arrow"
+        android:contentDescription="go back"
+        android:onClick="goBackPressed"
+        android:textColor="#00000000" />
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:text="SETTINGS"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:contentDescription="settings"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:padding="10dp"
+        app:cardBackgroundColor="#30302e"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:layout_gravity="center">
+
+
+        <Button
+            android:id="@+id/btnProfileBeginner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#30302e"
+            android:text="BEGINNERS"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:contentDescription="beginners"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:padding="10dp"
+        app:cardBackgroundColor="#30302e"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:layout_gravity="center">
+
+
+        <Button
+            android:id="@+id/btnProfileBeginnerNavi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#30302e"
+            android:text="BEGINNERS+NAVI"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:contentDescription="beginners and navigation"/>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:padding="10dp"
+        app:cardBackgroundColor="#30302e"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:layout_gravity="center">
+
+
+            <Button
+                android:id="@+id/btnProfileRegular"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="REGULAR"
+                android:backgroundTint="#30302e"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:contentDescription="regular"/>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:padding="10dp"
+        app:cardBackgroundColor="#30302e"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:layout_gravity="center">
+
+
+            <Button
+                android:id="@+id/btnProfileRegularNavi"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="REGULAR+NAVI"
+                android:backgroundTint="#30302e"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:contentDescription="regular and navigation"/>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:padding="10dp"
+        app:cardBackgroundColor="#30302e"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:layout_gravity="center">
+
+
+            <Button
+                android:id="@+id/btnProfileCustom1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="CUSTOM 1"
+                android:backgroundTint="#30302e"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:contentDescription="custom1"/>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:padding="10dp"
+        app:cardBackgroundColor="#30302e"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:layout_gravity="center">
+
+
+            <Button
+                android:id="@+id/btnProfileCustom2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="CUSTOM 2"
+                android:backgroundTint="#30302e"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:contentDescription="custom2"/>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:padding="10dp"
+        app:cardBackgroundColor="#EBE2E2"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:layout_gravity="center">
+
+
+            <Button
+                android:id="@+id/btnProfileCustomize"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="CUSTOMIZE PROFILES"
+                android:backgroundTint="#EBE2E2"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:contentDescription="customize profiles"/>
+
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
