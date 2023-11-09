@@ -53,8 +53,8 @@ public class Location<MyApp> extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.location_activity);
 
-        latitudeTextView = findViewById(R.id.latTextView);
-        longitTextView = findViewById(R.id.lonTextView);
+       // latitudeTextView = findViewById(R.id.latTextView);
+       // longitTextView = findViewById(R.id.lonTextView);
         Location = findViewById(R.id.TextLocation);
         app = (MyApp) this.getApplicationContext();
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -98,8 +98,8 @@ public class Location<MyApp> extends AppCompatActivity {
                             requestNewLocationData();
                         } else {
 
-                            latitudeTextView.setText(location.getLatitude() + "");
-                            longitTextView.setText(location.getLongitude() + "");
+                           // latitudeTextView.setText(location.getLatitude() + "");
+                            //longitTextView.setText(location.getLongitude() + "");
                             Location.setText(cityName);
                             String finalCityName = cityName;
 

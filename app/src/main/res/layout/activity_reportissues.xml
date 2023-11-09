@@ -37,13 +37,16 @@
 
     <!-- on below line we are creating a spinner -->
 
-    <Spinner
-        android:id="@+id/idLanguageSpinner"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:contentDescription="select"
-        android:padding="40dp" />
+        android:layout_marginTop="30dp"
+        android:drawablePadding="16dp"
+        android:textSize="18dp"
+        android:hint="Select"
+        android:padding="12dp"
+        app:drawableRightCompat="@android:drawable/arrow_down_float" />
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,6 +96,8 @@
             android:textSize="18dp"
             android:contentDescription="submit"/>
     </androidx.cardview.widget.CardView>
+
+
 
 
 </LinearLayout>

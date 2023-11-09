@@ -40,7 +40,7 @@ public class PermissionActivity extends AppCompatActivity {
         requestPermissionsBtn.setOnClickListener(v -> {
 
             // inside on click listener calling method to request permission
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 requestPermissions();
 
             }
@@ -50,7 +50,7 @@ public class PermissionActivity extends AppCompatActivity {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.S)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void requestPermissions() {
         // below line is use to request permission in the current activity.
         // this method is use to handle error in runtime permissions
@@ -91,7 +91,8 @@ public class PermissionActivity extends AppCompatActivity {
                         // check for permanent denial of any permission
                         if (multiplePermissionsReport.isAnyPermissionPermanentlyDenied()) {
                             // permission is denied permanently, we will show user a dialog message.
-                            showSettingsDialog();
+                           // showSettingsDialog();
+                            mainWork();
                         }
                         //mainWork();
 

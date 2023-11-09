@@ -111,7 +111,7 @@
                 android:layout_height="45dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="40dp"
-                android:contentDescription="location"
+                android:contentDescription="Where Am I?"
                 android:scaleType="fitCenter"
                 android:text="WHERE AM I?"
                 android:textAlignment="center"

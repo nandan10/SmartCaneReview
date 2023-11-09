@@ -3,7 +3,6 @@ package com.example.smartcanedebug;
 
 import android.content.Context;
         import android.content.DialogInterface;
-import android.location.Location;
 import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
@@ -14,8 +13,6 @@ import android.view.LayoutInflater;
 
         import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
        // import com.raghav.sos.R;
 

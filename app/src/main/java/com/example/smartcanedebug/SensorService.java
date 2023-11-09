@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.VibrationEffect;
@@ -108,19 +107,20 @@ public class SensorService extends Service {
 
                     }
                 } else {
-                    String message = " I am in DANGER, need help. Please urgently reach me out.\n" + "GPS was turned off.Couldn't find location. Call your nearest Police Station.";
+                   /* String message = " I am in DANGER, need help. Please urgently reach me out.\n" + "GPS was turned off.Couldn't find location. Call your nearest Police Station.";
                     SmsManager smsManager = SmsManager.getDefault();
                     DbHelper db = new DbHelper(SensorService.this);
                     List<ContactModel> list = db.getAllContacts();
                     for (ContactModel c : list) {
                         smsManager.sendTextMessage(c.getPhoneNo(), null, message, null, null);
 
-                    }
+                    }*/
                 }
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+        });
+    /*.addOnFailureListener(new OnFailureListener() {
+           // @Override
+           /* public void onFailure(@NonNull Exception e) {
                 Log.d("Check: ", "OnFailure");
                 String message = "I am in DANGER, need help. Please urgently reach me out.\n" + "GPS was turned off.Couldn't find location. Call your nearest Police Station.";
                 SmsManager smsManager = SmsManager.getDefault();
@@ -130,7 +130,7 @@ public class SensorService extends Service {
                     smsManager.sendTextMessage(c.getPhoneNo(), null, message, null, null);
                 }
             }
-        });
+        });*/
 
         // this method is called for making a call.
 

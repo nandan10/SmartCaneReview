@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
     private void showStartDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Essential Information!")
-                .setMessage("In order to use Emergency features,Please select contacts you want to connect to,during any sort of Emergency through Emergency Settings.")
+                .setMessage("In order to use Emergency features,Please select contacts you want to connect to, during any sort of Emergency through Emergency Settings.")
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

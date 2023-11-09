@@ -80,7 +80,7 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".ReportIssue"
+            android:name=".ReportIssues"
             android:exported="false" />
         <activity
             android:name=".IntensityActivity"
@@ -123,6 +123,11 @@
             android:enabled="true"
             android:exported="true" />
 
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            tools:replace="android:screenOrientation"
+            android:stateNotNeeded="true"/>
 
 
         <activity

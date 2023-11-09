@@ -11,6 +11,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 
 
 
@@ -23,8 +36,11 @@ public class RegisterActivity<Editor> extends AppCompatActivity {
     // variable for shared preferences.
     SharedPreferences sharedpreferences;
     // creating variables for our edit text and button.
-    private EditText messageEdt, messageEdt0,messageEdt1,messageEdt2;
+    private EditText messageEdt,messageEdt1,messageEdt2;
     Button submitBtn;
+    Button scanBtn;
+    TextView messageText;
+
 
     private Context ctx;
     // private Context ctx;
@@ -37,10 +53,16 @@ public class RegisterActivity<Editor> extends AppCompatActivity {
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         // initializing our variables.
         messageEdt = findViewById(R.id.idEdtMessage);
-        messageEdt0 = findViewById(R.id.idEdtMessage0);
+
         messageEdt1 = findViewById(R.id.idEdtMessage1);
         messageEdt2 = findViewById(R.id.idEdtMessage2);
         submitBtn = findViewById(R.id.BtnSubmit);
+        scanBtn = findViewById(R.id.scanBtn);
+        messageText = findViewById(R.id.textContent);
+
+
+        // adding listener to the button
+      //  scanBtn.setOnClickListener((View.OnClickListener) this);
 
         // adding on click listener for our button.
         submitBtn.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +76,7 @@ public class RegisterActivity<Editor> extends AppCompatActivity {
                                                  // if the input is empty we are displaying a toast message.
                                                  Toast.makeText(RegisterActivity.this, "Please enter your Name", Toast.LENGTH_SHORT).show();
                                              }
-                                             String msg0 = messageEdt0.getText().toString();
+                                             String msg0 =  messageText.getText().toString();
                                              if (TextUtils.isEmpty(msg0)) {
                                                  // if the input is empty we are displaying a toast message.
                                                  Toast.makeText(RegisterActivity.this, "Please enter your Serial Number", Toast.LENGTH_SHORT).show();
@@ -97,6 +119,38 @@ public class RegisterActivity<Editor> extends AppCompatActivity {
     }
 
 
+
+
+
+        public void onClick33(View v) {
+            // we need to create the object
+            // of IntentIntegrator class
+            // which is the class of QR library
+            IntentIntegrator intentIntegrator = new IntentIntegrator(this);
+            intentIntegrator.setPrompt("Scan a barcode or QR Code");
+            intentIntegrator.setOrientationLocked(false);
+            intentIntegrator.initiateScan();
+        }
+
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            // if the intentResult is null then
+            // toast a message as "cancelled"
+            if (intentResult != null) {
+                if (intentResult.getContents() == null) {
+                    Toast.makeText(getBaseContext(), "Cancelled", Toast.LENGTH_SHORT).show();
+                } else {
+                    // if the intentResult is not null we'll set
+                    // the content and format of scan message
+                    messageText.setText(intentResult.getContents());
+
+                }
+            } else {
+                super.onActivityResult(requestCode, resultCode, data);
+            }
+        }
 
 
 

@@ -31,7 +31,7 @@ public class GetSupport extends AppCompatActivity {
 
 
         Toast.makeText(getApplicationContext(), "You Clicked Report Issue", Toast.LENGTH_LONG).show();
-        Intent intentReport = new Intent(getBaseContext(), ReportIssue.class);
+        Intent intentReport = new Intent(getBaseContext(), ReportIssues.class);
 
         startActivity(intentReport);
     }

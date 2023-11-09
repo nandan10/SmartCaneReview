@@ -37,36 +37,7 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
 
-        android:text="Latitude:"
-        android:textSize="18dp"
-        />
-
-    <TextView
-        android:id="@+id/latTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Latitude will be here! "
-        android:textColor="#ffffff"
-        android:textSize="16dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:text="Longitude:"
-        android:textSize="18dp"
-       />
-    <TextView
-        android:id="@+id/lonTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Longitude will be here! "
-        android:textColor="#ffffff"
-        android:textSize="16dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -84,8 +55,8 @@
         android:textSize="18dp"/>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="350dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="10dp"
         android:clickable="true"
