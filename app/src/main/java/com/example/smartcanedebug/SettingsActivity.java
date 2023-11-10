@@ -1,21 +1,30 @@
 package com.example.smartcanedebug;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity {
-    Button settings1,settings2;
+    Button settings1,settings2,settings3;
+    private static final int REQUEST_ENABLE_BT = 11;
+    public static BluetoothAdapter BA;
+    private BLEController bleController;
+    private Common common;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
         initButtons();
+        this.bleController = BLEController.getInstance(this);
+        this.common = Common.getInstance();
 
     }
     private void initButtons() {
@@ -23,9 +32,9 @@ public class SettingsActivity extends AppCompatActivity {
         this.settings1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentProfile = new Intent(getBaseContext(), ProfilesActivity.class);
+                Intent intentIntensity = new Intent(getBaseContext(), IntensityActivity.class);
                // intentProfileCustomize.putExtra("CustomProfileNumber", 1);
-                startActivity(intentProfile);
+                startActivity(intentIntensity);
             }
         });
 
@@ -33,9 +42,18 @@ public class SettingsActivity extends AppCompatActivity {
         this.settings2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentIntensity = new Intent(getBaseContext(), IntensityActivity.class);
+                Intent intentEmergencySettings = new Intent(getBaseContext(), EmergencyMainActivity.class);
               //  intentProfileCustomize.putExtra("CustomProfileNumber", 2);
-                startActivity(intentIntensity);
+                startActivity(intentEmergencySettings);
+            }
+        });
+        this.settings3 = findViewById(R.id.settings3);
+        this.settings3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("initButtons", "onClick: Disconnecting...");
+                Toast.makeText(getApplicationContext(), "You Clicked Disconnect", Toast.LENGTH_LONG).show();
+                //bleController.disconnect();
             }
         });
     }

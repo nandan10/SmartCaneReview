@@ -34,7 +34,7 @@ public class ReportIssues extends AppCompatActivity {
             "I am unable to connect my device with the app",
             "I am unable to configure my App",
             "I need training support",
-            "I reason is not listed"};
+            "My reason is not listed"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

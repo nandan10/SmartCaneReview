@@ -31,6 +31,13 @@ public class IntensityActivity extends AppCompatActivity{
     private int mCounter1 = 5;
     Button btn1,btn2,btn3,btn4;
     TextView txv1,txv2;
+
+
+    private Button beginnerProfileButton;
+
+    private Button regularProfileButton;
+
+
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +53,10 @@ public class IntensityActivity extends AppCompatActivity{
         btn4 = (Button) findViewById(R.id.bt4);
         txv1 = (TextView) findViewById(R.id.tx1);
         txv2 = (TextView) findViewById(R.id.tx2);
+        this.bleController = BLEController.getInstance(this);
+        this.common = Common.getInstance();
 
+        initButtons();
     }
 
     public void count(View view) {
@@ -107,8 +117,25 @@ public class IntensityActivity extends AppCompatActivity{
 
 
     }*/
-  public void goBackPressed(View view) {
-      onBackPressed();
-  }
-}
+  private void initButtons() {
+      this.beginnerProfileButton = findViewById(R.id.btnProfileBeginner);
+      this.beginnerProfileButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              bleController.writeBLEData(bleController.profileChar, common.ACTIVATE_PROFILE_BEGINNER);
+          }
+      });
 
+
+      this.regularProfileButton = findViewById(R.id.btnProfileRegular);
+      this.regularProfileButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              bleController.writeBLEData(bleController.profileChar, common.ACTIVATE_PROFILE_REGULAR);
+          }
+      });}
+      public void goBackPressed (View view){
+          onBackPressed();
+      }
+
+  }

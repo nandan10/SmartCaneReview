@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="INTENSITY"
+        android:text="CONFIGURE YOUR SMARTCANE"
         android:textAlignment="center"
         android:textSize="20dp"
         android:textStyle="bold"
@@ -37,9 +37,8 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="130dp"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_margin="50dp"
-
             android:padding="50dp"
             app:cardBackgroundColor="#E8D5C9"
             app:cardCornerRadius="20dp"
@@ -50,13 +49,13 @@
                 android:id="@+id/vibration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:backgroundTint="#E8D5C9"
                 android:contentDescription="vibration"
+                android:gravity="center"
                 android:text="VIBRATION"
                 android:textColor="@color/black"
-                android:textSize="18dp"
-                android:gravity="center"
-                android:layout_gravity="center"/>
+                android:textSize="18dp" />
 
         </androidx.cardview.widget.CardView>
 
@@ -85,7 +84,7 @@
                 android:id="@+id/tx1"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="25dp"
                 android:gravity="center"
                 android:text="5"
                 android:textColor="@android:color/white"
@@ -111,7 +110,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="130dp"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:layout_margin="50dp"
 
             android:padding="10dp"
@@ -124,13 +123,13 @@
                 android:id="@+id/buzzer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:backgroundTint="#E8D5C9"
                 android:contentDescription="BUZZER"
+                android:gravity="center"
                 android:text="BUZZER"
                 android:textColor="@color/black"
-                android:textSize="18dp"
-                android:gravity="center"
-                android:layout_gravity="center"/>
+                android:textSize="18dp" />
 
         </androidx.cardview.widget.CardView>
 
@@ -146,7 +145,6 @@
             <Button
                 android:id="@+id/bt3"
                 android:layout_width="40dp"
-
                 android:layout_height="44dp"
                 android:layout_marginTop="35dp"
                 android:background="@color/white"
@@ -159,7 +157,7 @@
                 android:id="@+id/tx2"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="25dp"
                 android:gravity="center"
                 android:text="5"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -180,5 +178,87 @@
 
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
+        android:orientation="vertical"
+        >
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="50dp"
+        android:padding="50dp"
+        app:cardBackgroundColor="#E8D5C9"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp">
+
+
+        <TextView
+            android:id="@+id/caneoperatingmode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="32dp"
+            android:backgroundTint="#E8D5C9"
+            android:contentDescription="CANE OPERATING MODE"
+            android:text="CANE OPERATING MODE"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:layout_gravity="center"/>
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:clickable="true"
+        android:padding="10dp"
+        app:cardBackgroundColor="#30302e"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:layout_gravity="center">
+
+
+        <Button
+            android:id="@+id/btnProfileBeginner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#30302e"
+            android:text="LEARNER MODE"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:contentDescription="beginners"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="70dp"
+        android:clickable="true"
+        android:padding="10dp"
+        app:cardBackgroundColor="#30302e"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:layout_gravity="center">
+
+
+        <Button
+            android:id="@+id/btnProfileRegular"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#30302e"
+            android:text="REGULAR MODE"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:contentDescription="beginners"/>
+
+    </androidx.cardview.widget.CardView>
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>
 </LinearLayout>
