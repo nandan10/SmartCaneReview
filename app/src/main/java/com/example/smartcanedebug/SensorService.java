@@ -148,7 +148,7 @@ public class SensorService extends Service {
         VibrationEffect vibEff;
 
         // Android Q and above have some predefined vibrating patterns
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibEff = VibrationEffect.createPredefined(VibrationEffect.EFFECT_DOUBLE_CLICK);
             vibrator.cancel();
             vibrator.vibrate(vibEff);

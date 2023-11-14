@@ -14,14 +14,19 @@ import android.os.PowerManager;
 import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
@@ -57,7 +62,7 @@ public class EmergencySms extends AppCompatActivity {
 
 
         // check for runtime permissions
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_DENIED) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SEND_SMS, Manifest.permission.READ_CONTACTS}, 100);
             }
@@ -66,13 +71,13 @@ public class EmergencySms extends AppCompatActivity {
         // this is a special permission required only by devices using
         // Android Q and above. The Access Background Permission is responsible
         // for populating the dialog with "ALLOW ALL THE TIME" option
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}, 100);
         }
 
         // check for BatteryOptimization,
         PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (pm != null && !pm.isIgnoringBatteryOptimizations(getPackageName())) {
                 askIgnoreOptimization();
             }
@@ -85,7 +90,43 @@ public class EmergencySms extends AppCompatActivity {
             startService(intent);
         }
 
+        BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation3);
 
+        // Set Home selected
+       // bottomNavigationView.setSelectedItemId(R.id.home1);
+
+        // Perform item selected listener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch(item.getItemId()) {
+                    case R.id.settings3:
+                        // startActivity(new Intent(getApplicationContext(),SearchPOI.class));
+                        overridePendingTransition(0, 0);
+                        Toast.makeText(getApplicationContext(), "You Clicked Settings", Toast.LENGTH_LONG).show();
+                        Intent intentProfiles = new Intent(getBaseContext(), SettingsActivity.class);
+//                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
+                        startActivity(intentProfiles);
+                        return true;
+                    case R.id.home1:
+                        overridePendingTransition(0, 0);
+                        Toast.makeText(getApplicationContext(), "You Clicked Home", Toast.LENGTH_LONG).show();
+                        Intent intentMainActivity = new Intent(getBaseContext(), MainActivity.class);
+//                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
+                        startActivity(intentMainActivity);
+                        return true;
+                    case R.id.call:
+                        overridePendingTransition(0, 0);
+                        Toast.makeText(getApplicationContext(), "You Clicked Emergency Call", Toast.LENGTH_LONG).show();
+                        Intent intentEmergencyCall = new Intent(getBaseContext(), EmergencyCall.class);
+//                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
+                        startActivity(intentEmergencyCall);
+                        return true;
+                }
+                return false;
+            }
+        });
 
     }
 

@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toggleButton = findViewById(R.id.toggleButton);
+      //  toggleButton = findViewById(R.id.toggleButton);
         cd1 = (CardView) findViewById(R.id.cd1);
 
         cd4 = (CardView) findViewById(R.id.cd4);
@@ -124,11 +124,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                switch(item.getItemId())
-                {
+                switch(item.getItemId()) {
                     case R.id.settings3:
                         // startActivity(new Intent(getApplicationContext(),SearchPOI.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         Toast.makeText(getApplicationContext(), "You Clicked Settings", Toast.LENGTH_LONG).show();
                         Intent intentProfiles = new Intent(getBaseContext(), SettingsActivity.class);
 //                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
@@ -136,30 +135,13 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     case R.id.home1:
                         return true;
-                    case R.id.getsupport:
-                        overridePendingTransition(0,0);
-                        Toast.makeText(getApplicationContext(), "You Clicked Get Support", Toast.LENGTH_LONG).show();
-                        Intent intentRegister = new Intent(getBaseContext(), GetSupport.class);
+                    case R.id.call:
+                        overridePendingTransition(0, 0);
+                        Toast.makeText(getApplicationContext(), "You Clicked Emergency Call", Toast.LENGTH_LONG).show();
+                        Intent intentEmergencyCall = new Intent(getBaseContext(), EmergencyCall.class);
 //                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
-                        startActivity(intentRegister);
+                        startActivity(intentEmergencyCall);
                         return true;
-                    case R.id.findmysmartcane:
-                        // startActivity(new Intent(getApplicationContext(),ShowRoutes.class));
-                        overridePendingTransition(0,0);
-                        Toast.makeText(getApplicationContext(), "You Clicked Find My SmartCane", Toast.LENGTH_LONG).show();
-
-                        // bleController.writeBLEData(bleController.otherInstructionsChar, common.OTHER_CMD_IDENTIFY_SMARTCANE);
-                        return true;
-
-                    case R.id.emergencysettings:
-
-                        overridePendingTransition(0,0);
-                        Toast.makeText(getApplicationContext(), "You Clicked Emergency Settings", Toast.LENGTH_LONG).show();
-                        Intent intentEmergency = new Intent(getBaseContext(), EmergencyMainActivity.class);
-//                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
-                        startActivity(intentEmergency);
-                        return true;
-
                 }
                 return false;
             }
@@ -200,18 +182,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick1(View view) {
 
-        if (toggleButton.isChecked()) {
+       // if (toggleButton.isChecked()) {
             // textview1.setText("CONNECT");
             Log.d("initButtons", "onClick: Connecting...");
             Toast.makeText(getApplicationContext(), "You Clicked Connect", Toast.LENGTH_LONG).show();
             // bleController.connectToDevice(common.deviceAddress);
-        } else {
+      /*  } else {
             // textview1.setText("DISCONNECT");
             Log.d("initButtons", "onClick: Disconnecting...");
             Toast.makeText(getApplicationContext(), "You Clicked Disconnect", Toast.LENGTH_LONG).show();
             //bleController.disconnect();
             ;
-        }
+        }*/
     }
 
     public void onClick2(View view) {
@@ -221,12 +203,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onClick3(View view) {
+   /* public void onClick3(View view) {
         Toast.makeText(getApplicationContext(), "You Clicked Emergency Settings", Toast.LENGTH_LONG).show();
         Intent intentEmergency = new Intent(getBaseContext(), EmergencyMainActivity.class);
 //                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
         startActivity(intentEmergency);
-    }
+    }*/
 
     public void onClick7(View view) {
         Toast.makeText(getApplicationContext(), "You Clicked Debug", Toast.LENGTH_LONG).show();
@@ -236,21 +218,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void onClick5(View view) {
+   /* public void onClick5(View view) {
 
         Toast.makeText(getApplicationContext(), "You Clicked Emergency Call", Toast.LENGTH_LONG).show();
         Intent intentEmergencyCall = new Intent(getBaseContext(), EmergencyCall.class);
 //                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
         startActivity(intentEmergencyCall);
-    }
+    }*/
 
 
-    public void onClick6(View view) {
+  /*  public void onClick6(View view) {
         Toast.makeText(getApplicationContext(), "You Clicked Settings", Toast.LENGTH_LONG).show();
         Intent intentProfiles = new Intent(getBaseContext(), SettingsActivity.class);
 //                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
         startActivity(intentProfiles);
-    }
+    }*/
 
     public void onClick4(View view) {
 
@@ -262,18 +244,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick8(View view) {
 
-        Toast.makeText(getApplicationContext(), "You Clicked Location", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "You Clicked Where Am I?", Toast.LENGTH_LONG).show();
         Intent intentLocation = new Intent(getBaseContext(), Location.class);
 //                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
         startActivity(intentLocation);
     }
 
-    public void onClick9(View view) {
+   /* public void onClick9(View view) {
         Toast.makeText(getApplicationContext(), "You Clicked Battery Status", Toast.LENGTH_LONG).show();
         Intent intentBattery = new Intent(getBaseContext(), BatteryActivity.class);
 //                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
         startActivity(intentBattery);
-    }
+    }*/
 
     public void onClick10(View view) {
 

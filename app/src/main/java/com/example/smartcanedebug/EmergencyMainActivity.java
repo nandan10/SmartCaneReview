@@ -14,6 +14,7 @@ import android.os.PowerManager;
 import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -29,6 +30,7 @@ import com.example.smartcanedebug.CustomAdapter;
 import com.example.smartcanedebug.DbHelper;
 import com.example.smartcanedebug.ReactivateService;
 import com.example.smartcanedebug.SensorService;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
@@ -71,6 +73,45 @@ public class EmergencyMainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(EmergencyMainActivity.this, "Can't Add more than 5 Contacts", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+
+        BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation3);
+
+        // Set Home selected
+       // bottomNavigationView.setSelectedItemId(R.id.home1);
+
+        // Perform item selected listener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch(item.getItemId()) {
+                    case R.id.settings3:
+                        // startActivity(new Intent(getApplicationContext(),SearchPOI.class));
+                        overridePendingTransition(0, 0);
+                        Toast.makeText(getApplicationContext(), "You Clicked Settings", Toast.LENGTH_LONG).show();
+                        Intent intentProfiles = new Intent(getBaseContext(), SettingsActivity.class);
+//                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
+                        startActivity(intentProfiles);
+                        return true;
+                    case R.id.home1:
+                        overridePendingTransition(0, 0);
+                        Toast.makeText(getApplicationContext(), "You Clicked Home", Toast.LENGTH_LONG).show();
+                        Intent intentMainActivity = new Intent(getBaseContext(), MainActivity.class);
+//                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
+                        startActivity(intentMainActivity);
+                        return true;
+                    case R.id.call:
+                        overridePendingTransition(0, 0);
+                        Toast.makeText(getApplicationContext(), "You Clicked Emergency Call", Toast.LENGTH_LONG).show();
+                        Intent intentEmergencyCall = new Intent(getBaseContext(), EmergencyCall.class);
+//                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
+                        startActivity(intentEmergencyCall);
+                        return true;
+                }
+                return false;
             }
         });
     }
@@ -135,7 +176,7 @@ public class EmergencyMainActivity extends AppCompatActivity {
     // battery optimisation constraints from the App
     private void askIgnoreOptimization() {
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             @SuppressLint("BatteryLife") Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
             intent.setData(Uri.parse("package:" + getPackageName()));
             startActivityForResult(intent, IGNORE_BATTERY_OPTIMIZATION_REQUEST);

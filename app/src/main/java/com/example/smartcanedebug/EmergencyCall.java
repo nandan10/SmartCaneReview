@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -16,9 +17,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,13 +62,29 @@ public class EmergencyCall extends AppCompatActivity {
 
         //call.setAdapter(customAdapter);
 
+
+
+
+          //  for (ContactModel c : list) {
+                ContactModel c0 = list.get(0);
+                //  i = (int) listItems.get(i);
+              //  final ContactModel c = c0;
+                String phone_number0 = c0.getPhoneNo();
+
+                String Name0 = c0.getName();
+                Intent phone_intent = new Intent(Intent.ACTION_CALL);
+
+                // Set data of Intent through Uri by parsing phone number
+                phone_intent.setData(Uri.parse("tel:" + phone_number0));
+                Called.setText(Name0 + "\n" + phone_number0);
+                // start Intent
+                startActivity(phone_intent);
+
+          //  }
         ArrayList listItems = new ArrayList();
-
-
             for (ContactModel c : list) {
-                String phone_number = c.getPhoneNo();
-                String Name = c.getName();
-
+            String phone_number = c.getPhoneNo();
+            String Name = c.getName();
 
                 listItems.add(new NumbersView(R.drawable.ic_phone,Name));
 
@@ -138,17 +158,43 @@ public class EmergencyCall extends AppCompatActivity {
 
 
                 // Getting instance of Intent with action as ACTION_CALL
-                Intent phone_intent = new Intent(Intent.ACTION_CALL);
-
-                // Set data of Intent through Uri by parsing phone number
-                phone_intent.setData(Uri.parse("tel:" + phone_number));
-                Called.setText(Name + "\n" + phone_number);
-                // start Intent
-                startActivity(phone_intent);
 
 
 
                    }
+        BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation3);
+
+        // Set Home selected
+        bottomNavigationView.setSelectedItemId(R.id.call);
+
+        // Perform item selected listener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch(item.getItemId()) {
+                    case R.id.settings3:
+                        // startActivity(new Intent(getApplicationContext(),SearchPOI.class));
+                        overridePendingTransition(0, 0);
+                        Toast.makeText(getApplicationContext(), "You Clicked Settings", Toast.LENGTH_LONG).show();
+                        Intent intentProfiles = new Intent(getBaseContext(), SettingsActivity.class);
+//                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
+                        startActivity(intentProfiles);
+                        return true;
+                    case R.id.home1:
+                        overridePendingTransition(0, 0);
+                        Toast.makeText(getApplicationContext(), "You Clicked Home", Toast.LENGTH_LONG).show();
+                        Intent intentMainActivity = new Intent(getBaseContext(), MainActivity.class);
+//                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
+                        startActivity(intentMainActivity);
+                        return true;
+                    case R.id.call:
+
+                        return true;
+                }
+                return false;
+            }
+        });
 
       }
 
