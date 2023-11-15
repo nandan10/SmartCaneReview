@@ -117,7 +117,8 @@
             android:background="@color/black"
             app:itemIconTint="@drawable/selector"
             app:itemTextColor="@drawable/selector"
-            app:menu="@menu/menu_navigation2" />
+            app:menu="@menu/menu_navigation2"
+            app:labelVisibilityMode="unlabeled"/>
     </com.google.android.material.bottomappbar.BottomAppBar>
 
 

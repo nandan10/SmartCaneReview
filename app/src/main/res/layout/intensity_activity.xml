@@ -37,7 +37,7 @@
         android:textAlignment="center"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:contentDescription="intensity"/>
+        android:contentDescription="Configure your SmartCane"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -238,7 +238,7 @@
             android:text="LEARNER MODE"
             android:textColor="@color/white"
             android:textSize="18dp"
-            android:contentDescription="beginners"/>
+            android:contentDescription="Learner Mode"/>
 
     </androidx.cardview.widget.CardView>
 
@@ -262,7 +262,7 @@
             android:text="REGULAR MODE"
             android:textColor="@color/white"
             android:textSize="18dp"
-            android:contentDescription="beginners"/>
+            android:contentDescription="Regular Mode"/>
 
     </androidx.cardview.widget.CardView>
 
@@ -285,7 +285,8 @@ android:backgroundTint="@color/black">
     android:background="@color/black"
     app:itemIconTint="@drawable/selector"
     app:itemTextColor="@drawable/selector"
-    app:menu="@menu/menu_navigation2" />
+    app:menu="@menu/menu_navigation2"
+    app:labelVisibilityMode="unlabeled"/>
 </com.google.android.material.bottomappbar.BottomAppBar>
 
 
