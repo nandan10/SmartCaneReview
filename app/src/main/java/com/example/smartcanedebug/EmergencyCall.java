@@ -45,17 +45,12 @@ public class EmergencyCall extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.call_activity);
         Called = findViewById(R.id.Call);
+
         // call = findViewById(R.id.listView2);
         DbHelper db = new DbHelper(this);
 
         List<ContactModel> list = db.getAllContacts();
-        boolean noData = list.isEmpty();
-        if(noData){
 
-
-            showStartDialog();
-
-        }
 
         //CustomAdapter customAdapter = new CustomAdapter(this, list);
         // customAdapter.addAll();
@@ -63,9 +58,17 @@ public class EmergencyCall extends AppCompatActivity {
         //call.setAdapter(customAdapter);
 
 
+        boolean noData = list.isEmpty();
+
+        if(noData){
 
 
-          //  for (ContactModel c : list) {
+            showStartDialog();
+
+        }
+
+
+           for (ContactModel c : list) {
                 ContactModel c0 = list.get(0);
                 //  i = (int) listItems.get(i);
               //  final ContactModel c = c0;
@@ -80,7 +83,8 @@ public class EmergencyCall extends AppCompatActivity {
                 // start Intent
                 startActivity(phone_intent);
 
-          //  }
+
+            }
         ArrayList listItems = new ArrayList();
             for (ContactModel c : list) {
             String phone_number = c.getPhoneNo();
@@ -169,7 +173,7 @@ public class EmergencyCall extends AppCompatActivity {
 
         // Perform item selected listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
+          //  @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch(item.getItemId()) {
@@ -189,7 +193,11 @@ public class EmergencyCall extends AppCompatActivity {
                         startActivity(intentMainActivity);
                         return true;
                     case R.id.call:
-
+                        overridePendingTransition(0, 0);
+                        Toast.makeText(getApplicationContext(), "You Clicked Emergency Call", Toast.LENGTH_LONG).show();
+                        Intent intentEmergencyCall = new Intent(getBaseContext(), EmergencyCall.class);
+//                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
+                        startActivity(intentEmergencyCall);
                         return true;
                 }
                 return false;
