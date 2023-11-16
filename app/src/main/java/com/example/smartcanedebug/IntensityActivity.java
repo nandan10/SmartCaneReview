@@ -103,21 +103,25 @@ public class IntensityActivity extends AppCompatActivity{
     public void count(View view) {
         mCounter0++;
         txv1.setText(Integer.toString(mCounter0));
+        Toast.makeText(getApplicationContext(),Integer.toString(mCounter0), Toast.LENGTH_LONG).show();
        // bleController.writeBLEData(bleController.vibrationChar, common.vibration);
     }
     public void count1(View view) {
         mCounter0--;
         txv1.setText(Integer.toString(mCounter0));
+        Toast.makeText(getApplicationContext(),Integer.toString(mCounter0), Toast.LENGTH_LONG).show();
        // bleController.writeBLEData(bleController.vibrationChar, common.vibration);
     }
     public void count3(View view) {
         mCounter1++;
         txv2.setText(Integer.toString(mCounter1));
+        Toast.makeText(getApplicationContext(),Integer.toString(mCounter1), Toast.LENGTH_LONG).show();
         //bleController.writeBLEData(bleController.buzzerChar, common.buzzer);
     }
     public void count4(View view) {
         mCounter1--;
         txv2.setText(Integer.toString(mCounter1));
+        Toast.makeText(getApplicationContext(), Integer.toString(mCounter1), Toast.LENGTH_LONG).show();
         //bleController.writeBLEData(bleController.buzzerChar, common.buzzer);
     }
 

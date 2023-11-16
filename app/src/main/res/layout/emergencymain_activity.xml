@@ -39,8 +39,8 @@
         android:textStyle="bold" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="350dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="10dp"
         android:clickable="true"
@@ -61,10 +61,11 @@
                 android:id="@+id/Button1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="55dp"
                 android:backgroundTint="#30302e"
                 android:text="Add Emergency Contact "
                 android:textColor="@color/white"
-                android:textSize="16dp"
+                android:textSize="18dp"
                 android:contentDescription="Add emergency contact"/>
         </RelativeLayout>
 

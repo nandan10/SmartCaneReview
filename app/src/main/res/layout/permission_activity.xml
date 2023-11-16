@@ -24,7 +24,6 @@
             android:id="@+id/RequestPermission"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:backgroundTint="#30302e"
             android:contentDescription="Please enable Bluetooth and GPS services to continue."
             android:text="Please enable Bluetooth and GPS services to continue."

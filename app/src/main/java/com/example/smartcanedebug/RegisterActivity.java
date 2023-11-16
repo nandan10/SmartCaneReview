@@ -104,7 +104,7 @@ public class RegisterActivity<Editor> extends AppCompatActivity {
                                              i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"kumari.singh@gmail.com"});
                                              i.putExtra(Intent.EXTRA_SUBJECT, "REGISTER");
 
-                                             i.putExtra(Intent.EXTRA_TEXT,"Name : "+msg+"\n"+"Serial Number : "+msg0+"\n"+"Email-Id : "+msg1+"\n"+"Mobile Number : "+msg2);
+                                             i.putExtra(Intent.EXTRA_TEXT,"Name : "+msg+"\n"+"Mobile Number : "+msg2+"\n"+"Email-Id : "+msg1+"\n"+"Serial Number : "+msg0);
 
                                              startActivity(Intent.createChooser(i, "Choose an Email client :"));
 
