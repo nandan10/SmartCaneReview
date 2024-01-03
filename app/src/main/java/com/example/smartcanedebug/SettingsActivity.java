@@ -90,7 +90,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("initButtons", "onClick: Disconnecting...");
                 Toast.makeText(getApplicationContext(), "You Clicked Disconnect", Toast.LENGTH_LONG).show();
-                //bleController.disconnect();
+                bleController.disconnect();
             }
         });
     }

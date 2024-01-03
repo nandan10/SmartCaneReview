@@ -1,6 +1,10 @@
 package com.example.smartcanedebug;
 
-import android.Manifest;
+import static android.bluetooth.BluetoothProfile.GATT;
+
+
+import android.app.Dialog;
+import android.app.Service;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
@@ -13,10 +17,18 @@ import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.content.Intent;
+
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,21 +37,42 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
-import static android.bluetooth.BluetoothProfile.GATT;
+public class BLEController {
+    private final static String TAG = BLEController.class.getSimpleName();
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-public class BLEController<common> extends AppCompatActivity {
+    private int mConnectionState = STATE_DISCONNECTED;
+
+    private static final int STATE_DISCONNECTED = 0;
+    private static final int STATE_CONNECTING = 1;
+    private static final int STATE_CONNECTED = 2;
+
+    public final static String ACTION_GATT_CONNECTED =
+            "com.example.bluetooth.le.ACTION_GATT_CONNECTED";
+    public final static String ACTION_GATT_DISCONNECTED =
+            "com.example.bluetooth.le.ACTION_GATT_DISCONNECTED";
+    public final static String ACTION_GATT_SERVICES_DISCOVERED =
+            "com.example.bluetooth.le.ACTION_GATT_SERVICES_DISCOVERED";
+    public final static String ACTION_DATA_AVAILABLE =
+            "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
+    public final static String EXTRA_DATA =
+            "com.example.bluetooth.le.EXTRA_DATA";
+
+
+
+
+
     private static BLEController instance;
+    //public  BluetoothGattCallback bleConnectCallback;
+
+    private final Handler mHandler = new Handler();
 
     private BluetoothLeScanner scanner;
     private BluetoothDevice device;
     private BluetoothGatt bluetoothGatt;
     private BluetoothManager bluetoothManager;
-
-
+   // private BLEController bleController;
+   // Context activity;
 //    BLEService debugService(debugServiceUUID);
 //    BLEUnsignedCharCharacteristic setThresholdsChar(setThresholdsCharUUID, BLERead | BLEWrite);
 //    BLEUnsignedCharCharacteristic distanceChar(distanceCharUUID, BLERead | BLENotify);
@@ -65,7 +98,7 @@ public class BLEController<common> extends AppCompatActivity {
 //    BLEUnsignedCharCharacteristic navigationInstructionsChar(navigationInstructionsCharUUID, BLEWrite);
 //    BLEUnsignedCharCharacteristic otherInstructionsChar(otherInstructionsCharUUID, BLEWrite);
 
-    private final String debugServiceUUID = "19b10001-e8f2-537e-4f6c-d104768a1210";
+  /*  private final String debugServiceUUID = "19b10001-e8f2-537e-4f6c-d104768a1210";
     private final String setThresholdsCharUUID = "19b10001-e8f2-537e-4f6c-d104768a1211";
     private final String distanceCharUUID = "19b10001-e8f2-537e-4f6c-d104768a1212";
     private final String distanceOutputTypeCharUUID = "19b10001-e8f2-537e-4f6c-d104768a1213";
@@ -118,17 +151,46 @@ public class BLEController<common> extends AppCompatActivity {
     BluetoothGattCharacteristic muteChar = null;
 
     BluetoothGattCharacteristic navigationInstructionsChar = null;
-    BluetoothGattCharacteristic otherInstructionsChar = null;
+    BluetoothGattCharacteristic otherInstructionsChar = null;*/
+
+    UUID batteryServiceUuid = UUID.fromString("19b10001-e8f2-537e-4f6c-d104768a1210");
+    UUID batteryLevelCharUuid = UUID.fromString("19b10001-e8f2-537e-4f6c-d104768a1211");
+    UUID operatingModeStatuseUuid = UUID.fromString("19b10001-e8f2-537e-4f6c-d104768a1212");
+    UUID settingsUuid =  UUID.fromString("19b10002-e8f2-537e-4f6c-d104768a1210");
+    UUID VibrationUuid = UUID.fromString("19b10002-e8f2-537e-4f6c-d104768a1212");
+    UUID buzzerUuid = UUID.fromString("19b10002-e8f2-537e-4f6c-d104768a1213");
+    UUID operatingModeUuid = UUID.fromString("19b10002-e8f2-537e-4f6c-d104768a1211");
+    UUID CommandUuid = UUID.fromString("19b10003-e8f2-537e-4f6c-d104768a1210");
+    UUID MiscUuid = UUID.fromString( "19b10003-e8f2-537e-4f6c-d104768a1211");
+    UUID MagicUuid = UUID.fromString( "19b10003-e8f2-537e-4f6c-d104768a1212");
+    BluetoothGattCharacteristic misc = null;
+    BluetoothGattCharacteristic magic = null;
+    BluetoothGattCharacteristic batteryLevelChar = null;
+    BluetoothGattCharacteristic operatingMode = null;
+    BluetoothGattCharacteristic buzzer = null;
+    BluetoothGattCharacteristic vibration = null;
+    BluetoothGattCharacteristic operatingModeStatus = null;
+  /*  BluetoothGattCharacteristic batterylevel = null;
+    BluetoothGattCharacteristic operatingModeStatus = null;
+    BluetoothGattCharacteristic muteStatus = null;
+    BluetoothGattCharacteristic errors = null;
+    BluetoothGattCharacteristic operatingMode = null;
+    BluetoothGattCharacteristic vibrationLevel = null;
+
+    BluetoothGattCharacteristic buzzerSound = null;
+
+    BluetoothGattCharacteristic misc = null;*/
+
 
     List<BluetoothGattCharacteristic> bgcNotificationArray = new ArrayList<>();
 
     private boolean resetChar = true;
     private boolean bleDescriptorWritten = true;
 
-    private HashMap<String, BluetoothDevice> devices = new HashMap<>();
-    private Common common;
+    private final HashMap<String, BluetoothDevice> devices = new HashMap<>();
+    private final Common common;
 
-    Context context;
+  //  Context context = getApplicationContext();
 
     //    EditText distance1EditText = findViewById(R.id.editTextDistance1);
 //    EditText distance2EditText = findViewById(R.id.editTextDistance2);
@@ -170,11 +232,13 @@ public class BLEController<common> extends AppCompatActivity {
     TextView modeValueTxt;
     TextView muteValueTxt;
     TextView errorsValueTxt;
-
+   // Handler mHandler;
+    Dialog dialog;
 
     private BLEController(Context ctx) {
         try {
             this.bluetoothManager = (BluetoothManager) ctx.getSystemService(Context.BLUETOOTH_SERVICE);
+
         } catch (Exception e) {
             Log.d("BLE Service", "BLEController: " + e);
         }
@@ -189,14 +253,15 @@ public class BLEController<common> extends AppCompatActivity {
         return instance;
     }
 
-    public void init() {
+    public boolean init() {
 //        initOtherActivityItems();
         this.devices.clear();
         this.scanner = this.bluetoothManager.getAdapter().getBluetoothLeScanner();
         this.scanner.startScan(bleCallback);
+        return false;
     }
 
-    private void initOtherActivityItems() {
+  /*  private void initOtherActivityItems() {
         distance1EditText = findViewById(R.id.editTextDistance1);
         distance2EditText = findViewById(R.id.editTextDistance2);
         distance3EditText = findViewById(R.id.editTextDistance3);
@@ -218,8 +283,8 @@ public class BLEController<common> extends AppCompatActivity {
         muteValueTxt = findViewById(R.id.txtMuteValue);
         errorsValueTxt = findViewById(R.id.txtErrorsValue);
     }
-
-    private ScanCallback bleCallback = new ScanCallback() {
+*/
+    private final ScanCallback bleCallback = new ScanCallback() {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
             BluetoothDevice device = result.getDevice();
@@ -268,10 +333,18 @@ public class BLEController<common> extends AppCompatActivity {
         this.bluetoothGatt = device.connectGatt(null, false, this.bleConnectCallback);
     }
 
-    private final BluetoothGattCallback bleConnectCallback = new BluetoothGattCallback() {
-        @Override
+  public  BluetoothGattCallback bleConnectCallback = new BluetoothGattCallback() {
+
+
+     // private BluetoothGattCharacteristic bgc;
+
+      @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+          String intentAction;
             if (newState == BluetoothProfile.STATE_CONNECTED) {
+                //intentAction = ACTION_GATT_CONNECTED;
+                mConnectionState = STATE_CONNECTED;
+                //broadcastUpdate(intentAction);
                 Log.i("[BLE]", "start service discovery " + bluetoothGatt.discoverServices());
 //                runOnUiThread(new Runnable() {
 //                    @Override
@@ -281,14 +354,18 @@ public class BLEController<common> extends AppCompatActivity {
 //                });
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 initChars();
+                //intentAction = ACTION_GATT_DISCONNECTED;
+               // mConnectionState = STATE_DISCONNECTED;
+               // broadcastUpdate(intentAction);
                 Log.w("[BLE]", "DISCONNECTED with status " + status);
 //                Toast.makeText(context, "Smart Cane disconnected", Toast.LENGTH_LONG).show();
             } else {
                 Log.i("[BLE]", "unknown state " + newState + " and status " + status);
+                //broadcastUpdate(intentAction);
             }
         }
 
-        @Override
+      /*  @Override
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
             Log.i("[BLE]", "service discovered");
             Log.d("BLE", "onServicesDiscovered: reset char " + resetChar + "______________________________________________________________________________");
@@ -371,7 +448,126 @@ public class BLEController<common> extends AppCompatActivity {
                             }
                         }
                     }
-                }
+                }*/
+
+        @Override
+        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+            Log.i("[BLE]", "service discovered");
+            Log.d("BLE", "onServicesDiscovered: reset char " + resetChar + "______________________________________________________________________________");
+            if (resetChar == true) {
+                Log.d("BLE", "onServicesDiscovered: reset char______________________________________________________________________________");
+                for (BluetoothGattService service : gatt.getServices()) {
+
+                   // broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED);
+                    List<BluetoothGattCharacteristic> gattCharacteristics = service.getCharacteristics();
+                    for (BluetoothGattCharacteristic bgc : gattCharacteristics) {
+                        Log.d("BLE Service discovered", "onServicesDiscovered: " + service.getUuid().toString());
+                        if (service.getUuid().toString().equalsIgnoreCase(String.valueOf(batteryServiceUuid))) {
+                            // for (BluetoothGattCharacteristic bgc : gattCharacteristics) {
+                            Log.d("BLE Char discovered", "onServicesDiscovered: " + bgc.getUuid().toString());
+                            if (bgc.getUuid().toString().equalsIgnoreCase(String.valueOf(batteryLevelCharUuid))) {
+                                batteryLevelChar = bgc;
+                                setCharNotification(gatt, bgc);
+                            } else if (bgc.getUuid().toString().equalsIgnoreCase(String.valueOf(operatingModeStatuseUuid))) {
+                                operatingModeStatus = bgc;
+                                setCharNotification(gatt, bgc);}}
+                        // }
+                        if (service.getUuid().toString().equalsIgnoreCase(String.valueOf(settingsUuid))) {
+                            // for (BluetoothGattCharacteristic bgc : gattCharacteristics) {
+                            Log.d("BLE Char discovered", "onServicesDiscovered: " + bgc.getUuid().toString());
+                            if (bgc.getUuid().toString().equalsIgnoreCase(String.valueOf(VibrationUuid))) {
+                                vibration = bgc;}
+                            else if (bgc.getUuid().toString().equalsIgnoreCase(String.valueOf(buzzerUuid))) {
+                                buzzer = bgc;}
+                            // setCharNotification(gatt, bgc);
+                            else if (bgc.getUuid().toString().equalsIgnoreCase(String.valueOf(operatingModeUuid))) {
+                                operatingMode = bgc;}}
+                        if (service.getUuid().toString().equalsIgnoreCase(String.valueOf(CommandUuid))) {
+                            // for (BluetoothGattCharacteristic bgc : gattCharacteristics) {
+                            Log.d("BLE Char discovered", "onServicesDiscovered: " + bgc.getUuid().toString());
+                            if (bgc.getUuid().toString().equalsIgnoreCase(String.valueOf(MiscUuid))) {
+                                misc = bgc;}
+                               else if (bgc.getUuid().toString().equalsIgnoreCase(String.valueOf(MagicUuid))) {
+                                    magic = bgc;
+                                    setCharNotification(gatt, bgc);
+
+
+
+
+                                    //  if (service.getUuid().toString().equalsIgnoreCase(debugServiceUUID)) {
+                       /* for (BluetoothGattCharacteristic bgc : gattCharacteristics) {
+                            Log.d("BLE Char discovered", "onServicesDiscovered: " + bgc.getUuid().toString());
+                            if (bgc.getUuid().toString().equalsIgnoreCase(setThresholdsCharUUID)) {
+                                setThresholdsChar = bgc;
+                            } else if (bgc.getUuid().toString().equalsIgnoreCase(distanceCharUUID)) {
+                                distanceChar = bgc;
+                                setCharNotification(gatt, bgc);
+                            } else if (bgc.getUuid().toString().equalsIgnoreCase(distanceOutputTypeCharUUID)) {
+                                distanceOutputTypeChar = bgc;
+                                setCharNotification(gatt, bgc);
+                            } else if (bgc.getUuid().toString().equalsIgnoreCase(distanceOutputPatternCharUUID)) {
+                                distanceOutputPatternChar = bgc;
+                                setCharNotification(gatt, bgc);
+                            } else if (bgc.getUuid().toString().equalsIgnoreCase(batteryLevelCharUUID)) {
+                                batteryLevelChar = bgc;
+                                setCharNotification(gatt, bgc);
+                            } else if (bgc.getUuid().toString().equalsIgnoreCase(errorsCharUUID)) {
+                                errorsChar = bgc;
+                                setCharNotification(gatt, bgc);
+                            }
+                        }
+                    }*/ /* if (service.getUuid().toString().equalsIgnoreCase(deviceStatusServiceUUID)) {
+                        for (BluetoothGattCharacteristic bgc : gattCharacteristics) {
+                            Log.d("BLE Char discovered", "onServicesDiscovered: " + bgc.getUuid().toString());
+                            if (bgc.getUuid().toString().equalsIgnoreCase(batterylevelUUID)) {
+                               batterylevel = bgc;
+                            } else if (bgc.getUuid().toString().equalsIgnoreCase(operatingModeStatusUUID)) {
+                               operatingModeStatus = bgc;
+                                setCharNotification(gatt, bgc);
+                            }
+                            else if (bgc.getUuid().toString().equalsIgnoreCase(muteStatusUUID)) {
+                                muteStatus = bgc;
+                                setCharNotification(gatt, bgc);
+                            }else if (bgc.getUuid().toString().equalsIgnoreCase(errorsUUID)) {
+                                errors = bgc;
+                                setCharNotification(gatt, bgc);
+                            }
+                        }
+                    } else if (service.getUuid().toString().equalsIgnoreCase(settingsStatusUUID)) {
+                        for (BluetoothGattCharacteristic bgc : gattCharacteristics) {
+                            Log.d("BLE Char discovered", "onServicesDiscovered: " + bgc.getUuid().toString());
+//                            if (bgc.getUuid().toString().equalsIgnoreCase(outputTypeCharUUID)) {
+//                                outputTypeChar = bgc;
+//                            } else if (bgc.getUuid().toString().equalsIgnoreCase(outputPatternCharUUID)) {
+//                                outputPatternChar = bgc;
+//                            }
+                            if (bgc.getUuid().toString().equalsIgnoreCase(operatingModeUUID)) {
+                               operatingMode = bgc;
+                            }
+                            if (bgc.getUuid().toString().equalsIgnoreCase(vibrationLevelUUID)) {
+                               vibrationLevel = bgc;
+                                setCharNotification(gatt, bgc);
+                            }
+                            if (bgc.getUuid().toString().equalsIgnoreCase(buzzerSoundUUID)) {
+                               buzzerSound = bgc;
+                                setCharNotification(gatt, bgc);
+                            }
+                        }
+                    } else if (service.getUuid().toString().equalsIgnoreCase(commandsUUID)) {
+                        for (BluetoothGattCharacteristic bgc : gattCharacteristics) {
+                            //Log.d("BLE Char discovered", "onServicesDiscovered: " + bgc.getUuid().toString());
+                          //  if (bgc.getUuid().toString().equalsIgnoreCase(miscUUID)) {
+                              // misc = bgc;
+                           // }
+                         if (bgc.getUuid().toString().equalsIgnoreCase(magicButtonUUID)) {
+                               magicButton = bgc;
+                                setCharNotification(gatt, bgc);
+                            }
+
+                        }
+                    }
+                }*/
+                            }}}}
                 class enableCharNotificationDescriptor implements Runnable {
                     //        runOnUiThread(new Runnable() {
                     @Override
@@ -383,6 +579,8 @@ public class BLEController<common> extends AppCompatActivity {
                                 descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
                                 gatt.writeDescriptor(descriptor);
                                 bleDescriptorWritten = false;
+
+
                             }
                         } catch (Exception e) {
                             Log.i("enableCharNotificationDescriptor exception", "run: " + e);
@@ -393,16 +591,85 @@ public class BLEController<common> extends AppCompatActivity {
                 exec.execute(new enableCharNotificationDescriptor());
                 resetChar = false;
             }
+
+        }
+        public List<BluetoothGattService> getSupportedGattServices() {
+            if (bluetoothGatt == null) return null;
+
+            return bluetoothGatt.getServices();
         }
 
         @Override
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             Log.i("[BLE]", "onCharacteristicRead status: " + status);
             if (status == BluetoothGatt.GATT_SUCCESS) {
+                Log.i("[BLERead]", characteristic.getUuid().toString());
+                Log.i("[BLERead]", String.valueOf(characteristic.getValue()));
+                // common.thresholdBytes = characteristic.getValue();
+                if (characteristic == batteryLevelChar) {
+                    common.batterylevel = characteristic.getValue()[0];
+                    Log.d("Batterylevel", "onCharacteristicChanged, batterylevel: " + common.batterylevel);
+                } else if (characteristic == operatingModeStatus) {
+                    common.operatingModeStatus = characteristic.getValue()[0];
+                    Log.d("operatingModeStatus", "onCharacteristicChanged, operatingModeStatus: " + common.operatingModeStatus);
+                }
+
+
+                /*else if (characteristic == muteStatus) {
+                    common.muteStatus = characteristic.getValue()[0];
+                } else if (characteristic == errors) {
+                    common.errors = characteristic.getValue()[0];
+                }*/ else if (characteristic == operatingMode) {
+                    common.operatingMode = characteristic.getValue()[0];
+                    Log.d("operatingMode", "onCharacteristicChanged, operatingMode: " + common.operatingMode);
+                } else if (characteristic == vibration) {
+                    common.vibrationLevel = characteristic.getValue()[0];
+                    Log.d("vibration", "onCharacteristicChanged, vibration: " + common.vibrationLevel);
+                    // Log.i("vib", String.valueOf(common.vibrationLevel));
+                    // batteryTextView.setText(common.vibrationLevel));
+                } else if (characteristic == buzzer) {
+                    common.buzzerSound = characteristic.getValue()[0];
+                    Log.d("buzzer", "onCharacteristicChanged, buzzer: " + common.buzzerSound);
+                }
+                // common.debugReadReadyFLag = true;
+//                    DebugActivity.getInstance().displayThresholdValues();
+            }
+        }
+
+
+        @Override
+        public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+            Log.i("[BLEWrite]", "------------- onCharacteristicWrite status: " + status);
+//            BluetoothGatt.GATT_WRITE_NOT_PERMITTED
+            // handler callback of write characteristic.
+            // do somethings here.
+            // gatt.writeCharacteristic(characteristic);
+            if (characteristic == operatingMode) {
+                common.operatingMode = characteristic.getValue()[0];
+                Log.d("operatingMode", "onCharacteristicChanged, operatingMode: " + common.operatingMode);
+
+            }
+            if (characteristic == vibration) {
+                common.vibrationLevel = characteristic.getValue()[0];
+                Log.d("vibration", "onCharacteristicChanged, vibration: " + common.vibrationLevel);
+
+            } else if (characteristic == buzzer) {
+                common.buzzerSound = characteristic.getValue()[0];
+                Log.d("vibration", "onCharacteristicChanged, vibration: " + common.buzzerSound);
+
+            }
+            else if (characteristic == misc) {
+                //common.misc = characteristic.getValue()[0];
+            }
+        }
+      /*  @Override
+        public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+            Log.i("[BLE]", "onCharacteristicRead status: " + status);
+            if (status == BluetoothGatt.GATT_SUCCESS) {
                 Log.i("[BLE]", characteristic.getUuid().toString());
                 Log.i("[BLE]", String.valueOf(characteristic.getValue()));
                 common.thresholdBytes = characteristic.getValue();
-                if (characteristic == setThresholdsChar) {
+               /* if (characteristic == setThresholdsChar) {
                     int idxOrg = 0, v;
                     for (int i = 0; i < 12; i++) {
                         common.thresholdInt[i] = 0;
@@ -424,17 +691,117 @@ public class BLEController<common> extends AppCompatActivity {
 //                    DebugActivity.getInstance().displayThresholdValues();
                 }
             }
-        }
+        }*/
 
-        @Override
+      /*  @Override
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             Log.i("[BLE]", "------------- onCharacteristicWrite status: " + status);
 //            BluetoothGatt.GATT_WRITE_NOT_PERMITTED
             // handler callback of write characteristic.
             // do somethings here.
-        }
+        }*/
 
+
+        //enable notifcations by setting the respective config flag
+       
+       /* public void setCharacteristicNotification(BluetoothGattCharacteristic characteristic,
+                                                  boolean enabled) {
+
+            BluetoothGatt mBluetoothGatt = null;
+            BluetoothAdapter BA = null;
+            if (BA == null || mBluetoothGatt == null) {
+
+                Log.d("TAG", "BluetoothAdapter no inicializado");
+                return;
+            }
+
+            mBluetoothGatt.setCharacteristicNotification(characteristic, enabled);
+
+        }*/
         @Override
+        public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+            displayCharacteristic(characteristic);
+          //  broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
+
+            if (characteristic == batteryLevelChar) {
+                 common.batterylevel  = characteristic.getValue()[0];
+
+                Log.d("BatteryLevel", "onCharacteristicChanged, batteryLevel: " + common.batterylevel);
+            } else if (characteristic == operatingModeStatus) {
+                common.operatingModeStatus = characteristic.getValue()[0];
+                Log.d("operatingModeStatus", "onCharacteristicChanged, operatingModeStatus: " +  common.operatingModeStatus);
+            }/* else if (characteristic == muteStatus) {
+                common.muteStatus = characteristic.getValue()[0];
+            } else if (characteristic == errors) {
+                common.errors = characteristic.getValue()[0];
+            }*/ else if (characteristic == magic) {
+                common.magicbtn = characteristic.getValue()[0];
+                Log.d("magicbtn", "onCharacteristicChanged, magicbtn: " + common.magicbtn);
+
+
+
+                   // });
+               // if (common.magicbtn == 1){
+                  //  Log.d("OMS", "click");
+                  //  setDebugCharNotification();
+                   // Toast.makeText( BLEController.this, "You Clicked Settings", Toast.LENGTH_LONG).show();
+                       /* Intent intentEmergency = new Intent(getBaseContext(), EmergencyMainActivity.class);
+//                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
+                        startActivity(intentEmergency);*/
+               // }*/
+
+           // broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
+
+            }}
+
+
+    /*  private void broadcastUpdate(final String action) {
+          final Intent intent = new Intent(action);
+          sendBroadcast(intent);
+      }*/
+    /*  private void broadcastUpdate(final String action,
+                                   final BluetoothGattCharacteristic characteristic) {
+          final Intent intent = new Intent(action);
+
+          // This is special handling for the Heart Rate Measurement profile.  Data parsing is
+          // carried out as per profile specifications:
+          // http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
+          if (characteristic == magic) {
+              common.magicbtn = characteristic.getValue()[0];
+             // common.magicbtn = characteristic.getValue()[0];
+              Log.d("magicbtn", "onCharacteristicChanged, magicbtn: " + common.magicbtn);
+              intent.putExtra(EXTRA_DATA, String.valueOf(common.magicbtn));
+              }
+
+       sendBroadcast(intent);
+      }*/
+
+
+            // if (toggleButton.isChecked()) {
+                        // textview1.setText("CONNECT");
+                    /*    Log.d("initButtons", "onClick: Connecting...");
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Toast", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    });
+                       // bleController.connectToDevice(common.deviceAddress);
+      /*  } else {
+            // textview1.setText("DISCONNECT");
+            Log.d("initButtons", "onClick: Disconnecting...");
+            Toast.makeText(getApplicationContext(), "You Clicked Disconnect", Toast.LENGTH_LONG).show();
+            //bleController.disconnect();
+            ;
+        }*/
+
+
+
+                //}*/
+
+
+      /*  @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
             displayCharacteristic(characteristic);
             if (characteristic == distanceChar) {
@@ -489,21 +856,65 @@ public class BLEController<common> extends AppCompatActivity {
 //                mBLEServiceCb.displayRssi(rssi);
 //            }
 //        }
-        @Override
+       */
+
+
+
+     // @Override
+     /* public LocalBinder onBind(Intent intent) {
+          return mBinder;
+      }
+
+     // @Override
+      public boolean onUnbind(Intent intent) {
+          // After using a given device, you should make sure that BluetoothGatt.close() is called
+          // such that resources are cleaned up properly.  In this particular example, close() is
+          // invoked when the UI is disconnecclass BluetoothLeService extends Service {
+          //
+          //    private Binder binder = new LocalBinder();
+          //
+          //    @Nullable
+          //    @Override
+          //    public IBinder onBind(Intent intent) {
+          //        return binder;
+          //    }
+          //
+          //    class LocalBinder extends Binder {
+          //        public BluetoothLeService getService() {
+          //            return BluetoothLeService.this;
+          //        }
+          //    }
+          //}ted from the Service.
+         // close();
+         // return super.onUnbind(intent);
+          return false;
+      }
+
+      private final LocalBinder mBinder =  new LocalBinder();*/
+
+      @Override
         public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
             Log.i("[BLE]", descriptor.getUuid().toString() + " " + Arrays.toString(descriptor.getValue()));
             Log.i("[BLE]", "status:" + status);
+
             bleDescriptorWritten = true;
+
         }
     };
 
-    private void setCharNotification(@NonNull BluetoothGatt gatt, BluetoothGattCharacteristic bgc) {
+    public void setCharNotification(@NonNull BluetoothGatt gatt, BluetoothGattCharacteristic bgc) {
         gatt.setCharacteristicNotification(bgc, true);
         bgcNotificationArray.add(bgc);
-    }
+
+
+        }
+
+
+
+
 
     private void initChars() {
-        setThresholdsChar = null;
+       /* setThresholdsChar = null;
         distanceChar = null;
         distanceOutputTypeChar = null;
         distanceOutputPatternChar = null;
@@ -523,14 +934,17 @@ public class BLEController<common> extends AppCompatActivity {
         muteChar = null;
 
         navigationInstructionsChar = null;
-        otherInstructionsChar = null;
+        otherInstructionsChar = null;*/
 
         resetChar = true;
     }
 
     public void setDebugCharNotification() {
-//        this.bluetoothGatt.setCharacteristicNotification(distanceChar, true);
-//        this.bluetoothGatt.setCharacteristicNotification(distanceOutputTypeChar, true);
+       this.bluetoothGatt.setCharacteristicNotification(batteryLevelChar, true);
+        //Looper.prepare(); // to be able to make toast
+       // Toast.makeText(common, "battery", Toast.LENGTH_LONG).show();
+        // Looper.loop();
+        this.bluetoothGatt.setCharacteristicNotification(magic, true);
 //        this.bluetoothGatt.setCharacteristicNotification(distanceOutputPatternChar, true);
 //        this.bluetoothGatt.setCharacteristicNotification(batteryLevelChar, true);
 //        this.bluetoothGatt.setCharacteristicNotification(modeIOChar, true);
@@ -539,9 +953,29 @@ public class BLEController<common> extends AppCompatActivity {
 //        this.bluetoothGatt.setCharacteristicNotification(errorsChar, true);
     }
 
-    private void displayCharacteristic(final BluetoothGattCharacteristic characteristic) {
+public static void displayCharacteristic(final BluetoothGattCharacteristic characteristic) {
         Log.i("[BLE]", characteristic.getUuid().toString() + " " + characteristic.getValue());
-    }
+       /* if (common.magicbtn == 1){
+            Log.d("OMS", "click");
+            // Toast.makeText(getApplicationContext(), "You Clicked Settings", Toast.LENGTH_LONG).show();
+                       /* Intent intentEmergency = new Intent(getBaseContext(), EmergencyMainActivity.class);
+//                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
+                        startActivity(intentEmergency);*/
+
+            // overridePendingTransition(0, 0);
+            //Toast.makeText(getApplicationContext(), "You Clicked Settings", Toast.LENGTH_LONG).show();
+
+
+         /*   Looper.prepare(); // to be able to make toast
+            //Toast.makeText(activity, "not connected", Toast.LENGTH_LONG).show();
+            // Looper.loop();
+
+            Toast.makeText(bleController, "Magic Btn ", Toast.LENGTH_LONG).show();
+            Looper.loop();*/
+
+        }
+
+
 
     public void writeBLEData(BluetoothGattCharacteristic btGattChar, byte[] data) {
         btGattChar.setValue(data);
@@ -582,5 +1016,26 @@ public class BLEController<common> extends AppCompatActivity {
 //        this.bluetoothGatt.close();
     }
 
+  /*  public List<BluetoothGattService> getSupportedGattServices() {
+        if (bluetoothGatt == null) return null;
 
+        return bluetoothGatt.getServices();
+    }*/
+
+  /* @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+
+    public class LocalBinder {
+
+            BLEController getService() {
+                return BLEController.this;
+            }
+        }
+*/
 }
+
+

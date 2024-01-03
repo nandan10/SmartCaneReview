@@ -19,7 +19,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class DebugActivity extends AppCompatActivity {
+/*public class DebugActivity extends AppCompatActivity {
     private BLEController bleController;
     private Common common;
 
@@ -32,8 +32,8 @@ public class DebugActivity extends AppCompatActivity {
     private EditText distance5EditText;
     private EditText distance6EditText;
 
-    private EditText threshold1EditText;
-    private EditText threshold2EditText;
+    private EditText threshold1EditText;*/
+   /* private EditText threshold2EditText;
     private EditText threshold3EditText;
     private EditText threshold4EditText;
     private EditText threshold5EditText;
@@ -49,7 +49,7 @@ public class DebugActivity extends AppCompatActivity {
     private TextView errorsTextView;
 
 //    static DebugActivity debugActivity;
-    
+
     
 
     @Override
@@ -66,7 +66,7 @@ public class DebugActivity extends AppCompatActivity {
 //        debugActivity = this;
         bleController.setDebugCharNotification();
         common.debugReadReadyFLag = false;
-        bleController.readBLEData(bleController.setThresholdsChar);
+      //  bleController.readBLEData(bleController.setThresholdsChar);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -153,10 +153,10 @@ public class DebugActivity extends AppCompatActivity {
         distanceTextView.setText(String.valueOf(common.distance));
         currentTypeTextView.setText(String.valueOf(common.currentType));
         currentPatternTextView.setText(String.valueOf(common.currentPattern));
-        batteryTextView.setText(String.valueOf(common.batteryLevel));
-        modeTextView.setText(String.valueOf(common.mode));
-        muteTextView.setText(String.valueOf(common.mute));
-        gestureTextView.setText(String.valueOf(common.gesture));
+        batteryTextView.setText(String.valueOf(common.batterylevel));
+        //modeTextView.setText(String.valueOf(common.mode));
+       // muteTextView.setText(String.valueOf(common.mute));
+       // gestureTextView.setText(String.valueOf(common.gesture));
         errorsTextView.setText(String.valueOf(common.error));
     }
     void updateDistanceText() {
@@ -193,7 +193,7 @@ public class DebugActivity extends AppCompatActivity {
                     common.thresholdBytes[idxDst] = (byte)(common.thresholdInt[i] >> 24);
                     idxDst++;
                 }
-                bleController.writeBLEData(bleController.setThresholdsChar, common.thresholdBytes);
+               // bleController.writeBLEData(bleController.setThresholdsChar, common.thresholdBytes);
             }
         });
     }
@@ -250,5 +250,5 @@ public class DebugActivity extends AppCompatActivity {
     public void goBackPressed(View view) {
         onBackPressed();
     }
-}
+}*/
 

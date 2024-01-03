@@ -49,20 +49,9 @@
             android:name=".ReactivateService"
             android:enabled="true"
             android:exported="true"/>
-        <activity
-            android:name=".DebugActivity"
-            android:exported="false" />
+
         <activity
             android:name=".TrainingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProfilesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProfileToCustomizeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProfileCustomizeActivity"
             android:exported="false" />
         <activity
             android:name=".EmergencyMainActivity"
@@ -92,10 +81,6 @@
             android:name=".PermissionActivity"
             android:exported="false" />
 
-
-        <activity
-            android:name=".BatteryActivity"
-            android:exported="false" />
 
         <activity
             android:name=".GetSupport"

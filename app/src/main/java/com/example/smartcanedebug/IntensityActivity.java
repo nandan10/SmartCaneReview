@@ -5,22 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.WindowDecorActionBar;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatTextView;
 
-import com.andremion.counterfab.CounterFab;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -102,27 +93,29 @@ public class IntensityActivity extends AppCompatActivity{
 
     public void count(View view) {
         mCounter0++;
-        txv1.setText(Integer.toString(mCounter0));
+       txv1.setText(Integer.toString(mCounter0));
         Toast.makeText(getApplicationContext(),Integer.toString(mCounter0), Toast.LENGTH_LONG).show();
-       // bleController.writeBLEData(bleController.vibrationChar, common.vibration);
+        //bleController.writeBLEData(bleController.vibrationLevel, new byte[]{(byte) 0});
+        bleController.writeBLEData(bleController.vibration, new byte[]{(byte) mCounter0});
     }
     public void count1(View view) {
         mCounter0--;
         txv1.setText(Integer.toString(mCounter0));
         Toast.makeText(getApplicationContext(),Integer.toString(mCounter0), Toast.LENGTH_LONG).show();
-       // bleController.writeBLEData(bleController.vibrationChar, common.vibration);
+        bleController.writeBLEData(bleController.vibration,  new byte[]{(byte) mCounter0});
+       // bleController.writeBLEData(bleController.vibrationLevel,  new byte[]{(byte) mCounter0});
     }
     public void count3(View view) {
         mCounter1++;
         txv2.setText(Integer.toString(mCounter1));
         Toast.makeText(getApplicationContext(),Integer.toString(mCounter1), Toast.LENGTH_LONG).show();
-        //bleController.writeBLEData(bleController.buzzerChar, common.buzzer);
+        bleController.writeBLEData(bleController.buzzer,  new byte[]{(byte) mCounter1});
     }
     public void count4(View view) {
         mCounter1--;
         txv2.setText(Integer.toString(mCounter1));
         Toast.makeText(getApplicationContext(), Integer.toString(mCounter1), Toast.LENGTH_LONG).show();
-        //bleController.writeBLEData(bleController.buzzerChar, common.buzzer);
+        bleController.writeBLEData(bleController.buzzer,  new byte[]{(byte) mCounter1});
     }
 
 
@@ -167,7 +160,8 @@ public class IntensityActivity extends AppCompatActivity{
       this.beginnerProfileButton.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              bleController.writeBLEData(bleController.profileChar, common.ACTIVATE_PROFILE_BEGINNER);
+              bleController.writeBLEData(bleController.operatingMode, new byte[]{(byte) 0});
+             // bleController.writeBLEData(bleController.misc,new byte[]{(byte) 0});
           }
       });
 
@@ -176,7 +170,8 @@ public class IntensityActivity extends AppCompatActivity{
       this.regularProfileButton.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              bleController.writeBLEData(bleController.profileChar, common.ACTIVATE_PROFILE_REGULAR);
+             bleController.writeBLEData(bleController.operatingMode,new byte[]{(byte) 1});
+             // bleController.writeBLEData(bleController.vibrationLevel, new byte[]{(byte) 1});
           }
       });}
       public void goBackPressed (View view){

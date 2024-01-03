@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:onClick="gotoMainActivity"
         android:layout_gravity="center"
         android:clickable="true"
         app:cardBackgroundColor="#30302e"
@@ -20,7 +20,7 @@
     <Button
         android:id="@+id/startButton"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="250dp"
         android:layout_gravity="center"
         android:contentDescription="Welcome to SmartCane-App"
         android:foreground="@drawable/img_29"

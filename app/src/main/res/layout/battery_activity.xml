@@ -28,7 +28,27 @@
         android:textSize="20dp"
          />
     <TextView
-        android:id="@+id/txtBatteryValue1"
+        android:id="@+id/txtBatteryValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/black"
+        android:textAlignment="textStart"
+        android:textSize="20sp"
+        android:textColor="@color/white"/>
+    <TextView
+        android:id="@+id/txtMagic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="SMARTCANE-MAGICBTN"
+        android:textAlignment="center"
+        android:contentDescription="smartcane battery"
+
+        android:textSize="20dp"
+        />
+    <TextView
+        android:id="@+id/txtMagicValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"

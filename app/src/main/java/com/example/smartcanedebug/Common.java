@@ -9,14 +9,11 @@
 package com.example.smartcanedebug;
 
 import android.app.Application;
-import android.bluetooth.BluetoothManager;
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
 public class Common extends Application {
 //    public SQLiteDatabase myDb;
 
-//    public void BLEControllerConnected();
+    //    public void BLEControllerConnected();
 //    public void BLEControllerDisconnected();
 //    public void BLEDeviceFound(String name, String address);
     private static Common instance;
@@ -24,17 +21,17 @@ public class Common extends Application {
     int[] thresholdInt = new int[12];
     byte[] thresholdBytes = new byte[48];
     public boolean debugReadReadyFLag = false;
-//    public boolean debugNotifyDistanceFLag = false;
+    //    public boolean debugNotifyDistanceFLag = false;
     public int distance;
     public byte currentType;
     public byte currentPattern;
-    public byte batteryLevel;
-    public byte mode;
-    public byte mute;
+    public byte batterylevel;
+    public byte operatingModeStatus;
+    public byte operatingMode;
     public byte gesture;
-    public byte error;
-    public byte vibration ;
-    public byte buzzer ;
+    public byte magicbtn;
+    public byte vibrationLevel ;
+    public byte buzzerSound ;
 
     final byte NoneType = 0;
     final byte HapticType = 1;
@@ -82,18 +79,19 @@ public class Common extends Application {
 
     final byte[] OTHER_CMD_IDENTIFY_SMARTCANE = new byte[]{1};
 
-    final byte[] ACTIVATE_PROFILE_BEGINNER = new byte[]{HapticType, BeginnerPattern, NoneType, NonePattern, 0, 0, 0, 0, 0, 0, 0, 0};
+   /* final byte[] ACTIVATE_PROFILE_BEGINNER = new byte[]{HapticType, BeginnerPattern, NoneType, NonePattern, 0, 0, 0, 0, 0, 0, 0, 0};
     final byte[] ACTIVATE_PROFILE_BEGINNER_NAVI = new byte[]{HapticType, BeginnerPattern, HapticType, BeginnerPattern, 0, 0, 0, 0, 0, 0, 0, 0};
     final byte[] ACTIVATE_PROFILE_REGULAR = new byte[]{HapticType, RegularPattern, NoneType, NonePattern, 0, 0, 0, 0, 0, 0, 0, 0};
     final byte[] ACTIVATE_PROFILE_REGULAR_NAVI = new byte[]{HapticType, RegularPattern, HapticType, RegularPattern, 0, 0, 0, 0, 0, 0, 0, 0};
     byte[] ACTIVATE_PROFILE_CUSTOM1 = new byte[]{BuzzerType, CustomPattern, BuzzerType, CustomPattern, CustomDistancePattern1a, CustomDistancePattern2a, CustomDistancePattern3a, CustomDistancePattern4a, CustomNaviPattern1a, CustomNaviPattern2a, CustomNaviPattern3a, CustomNaviPattern4a};
     byte[] ACTIVATE_PROFILE_CUSTOM2 = new byte[]{BothType, CustomPattern, BothType, CustomPattern, CustomDistancePattern1b, CustomDistancePattern2b, CustomDistancePattern3b, CustomDistancePattern4b, CustomNaviPattern1b, CustomNaviPattern2b, CustomNaviPattern3b, CustomNaviPattern4b};
-
-   // final byte[] ACTIVATE_INTENSITY_VIBRATION = new byte[]{1,2,3,4,5,6,7,8,9,10};
-   // final byte[] ACTIVATE_INTENSITY_BUZZER = new byte[]{1,2,3,4,5,6,7,8,9,10};
+*/
+    // final byte[] ACTIVATE_INTENSITY_VIBRATION = new byte[]{1,2,3,4,5,6,7,8,9,10};
+    // final byte[] ACTIVATE_INTENSITY_BUZZER = new byte[]{1,2,3,4,5,6,7,8,9,10};
     @Override
     public void onCreate() {
         super.onCreate();
+
 //        myDb = openOrCreateDatabase("NavMobDB", Context.MODE_PRIVATE, null);
     }
 

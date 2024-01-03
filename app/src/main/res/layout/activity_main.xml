@@ -30,6 +30,7 @@
             android:textStyle="bold" />
 
 
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cd1"
             android:layout_width="match_parent"
@@ -71,6 +72,26 @@
 
 
                 android:src="@drawable/img22" />
+            <TextView
+                android:id="@+id/txtBatteryValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="300dp"
+                android:layout_marginTop="20dp"
+                android:textAlignment="textStart"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/txtMagicValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="300dp"
+                android:textAlignment="textStart"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
 
 
         </androidx.cardview.widget.CardView>
