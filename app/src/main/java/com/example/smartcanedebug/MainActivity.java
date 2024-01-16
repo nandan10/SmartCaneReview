@@ -2,7 +2,15 @@ package com.example.smartcanedebug;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
+
+import java.io.IOException;
+import java.util.Locale;
 import java.util.concurrent.*;
+
+import android.annotation.TargetApi;
+import android.content.Intent;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -11,11 +19,20 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,15 +46,25 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import android.content.SharedPreferences;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.smartcanedebug.BLEController;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import android.widget.ExpandableListView;
+
+
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -46,17 +73,35 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
+import java.util.concurrent.TimeUnit;
+
+
 public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_ENABLE_BT = 11;
     public static BluetoothAdapter BA;
     List<BluetoothGattCharacteristic> bgcNotificationArray = new ArrayList<>();
     private BLEController bleController;
+
     private Common common;
+    FusedLocationProviderClient mFusedLocationClient;
+    TextToSpeech tts;
     Handler appHandler = new Handler();
     int delay = 100, delayCheck = 100 ; //milliseconds
-
+    double current_lat, current_long, previous_bearing;
     ToggleButton toggleButton;
-   // TextView textview1;
+    // TextView textview1;
+    public static int ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE = 5469;
 
     private BluetoothLeScanner mBluetoothLeScanner;
     public final static String EXTRA_DATA =
@@ -64,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
     CardView cd1, cd2, cd3, cd4, cd5, cd6, cd7, cd8, cd9, cd10, cd11;
     private Handler handler;
     private BluetoothDevice device;
-   // private BluetoothGatt bluetoothGatt;
+    // private BluetoothGatt bluetoothGatt;
     private final static String TAG = MainActivity.class.getSimpleName();
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
@@ -72,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     private final int mConnectionState = STATE_DISCONNECTED;
     private static final int STATE_DISCONNECTED = 0;
     private static final int STATE_CONNECTED = 2;
-  //  private TextView mConnectionState;
+    //  private TextView mConnectionState;
     private TextView mDataField;
     private String mDeviceName;
     private String mDeviceAddress;
@@ -91,18 +136,29 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
+        checkPermission();
+
         //  toggleButton = findViewById(R.id.toggleButton);
         cd1 = findViewById(R.id.cd1);
 
         cd4 = findViewById(R.id.cd4);
         batteryTextView = findViewById(R.id.txtBatteryValue);
         magicTextView = findViewById(R.id.txtMagicValue);
+
+
         this.bleController = BLEController.getInstance(this);
         this.common = Common.getInstance();
+        startServiceViaWorker();
+
+
 
         runOnUiThread(new Runnable() {
 
@@ -127,11 +183,11 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
 
 
-            public void run() {
+                        public void run() {
+                            updateNotifyTexts();
+                            updateNotifyTexts1();
 
-                updateNotifyTexts1();
-
-            }
+                        }
 
                     });
 
@@ -141,13 +197,13 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-        }}ScheduledThreadPoolExecutor exec1 = new ScheduledThreadPoolExecutor(1);
+            }}ScheduledThreadPoolExecutor exec1 = new ScheduledThreadPoolExecutor(1);
 
         exec1.scheduleAtFixedRate(new MyRunnable(), 0, 1000, MILLISECONDS);
-      
 
 
-        class notifyUpdateTask implements Runnable {
+
+      /*  class notifyUpdateTask implements Runnable {
 
 
             @Override
@@ -183,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
         ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
         exec.scheduleAtFixedRate(new notifyUpdateTask(), 0, 1000, MILLISECONDS);
 
-
+*/
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation3);
 
@@ -260,28 +316,40 @@ public class MainActivity extends AppCompatActivity {
         batteryTextView.setText(String.valueOf(common.batterylevel));
 
     }
-  // @Override
+    // @Override
 
 
     public void updateNotifyTexts1() {
-      
+
         magicTextView.setText(String.valueOf(common.magicbtn));
-        if (common.magicbtn == 0){}
+        if (common.magicbtn == 0) {
+        }
 
-        if (common.magicbtn == 1){
+        if (common.magicbtn == 1) {
 
-            Toast.makeText( getApplicationContext(), "Your Device is connected to the App!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Your Device is connected to the App!", Toast.LENGTH_SHORT).show();
 
 
         }
 
 
-        if (common.magicbtn == 2){
+        if (common.magicbtn == 2) {
             Toast.makeText(getApplicationContext(), " Where Am I?", Toast.LENGTH_SHORT).show();
             Intent intentLocation = new Intent(getBaseContext(), Location.class);
 //                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
             startActivity(intentLocation);
-        }if (common.magicbtn == 3){
+
+
+
+           /* Intent intent = new Intent(this, MyLocationService.class);
+            startService(intent);*/
+
+        }
+
+
+
+
+        if (common.magicbtn == 3){
             Log.d("initButtons", "onClick: Disconnecting...");
             Toast.makeText(getApplicationContext(), "Your Device is Disconnected", Toast.LENGTH_SHORT).show();
             bleController.disconnect();
@@ -290,16 +358,45 @@ public class MainActivity extends AppCompatActivity {
             Intent intentEmergencyCall = new Intent(getBaseContext(), EmergencyCall.class);
 //                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
             startActivity(intentEmergencyCall);
-        }if (common.magicbtn == 11){
-            Toast.makeText(getApplicationContext(), "You Clicked Mute", Toast.LENGTH_SHORT).show();
-            // Intent intentEmergencyCall = new Intent(getBaseContext(), EmergencyCall.class);
+         /*  DbHelper db = new DbHelper(this);
+            List<ContactModel> list = db.getAllContacts();
+            for (ContactModel c : list) {
+                ContactModel c0 = list.get(0);
+                //  i = (int) listItems.get(i);
+                //  final ContactModel c = c0;
+                String phone_number0 = c0.getPhoneNo();
+
+                String Name0 = c0.getName();
+                Intent phone_intent = new Intent(Intent.ACTION_CALL);
+
+                // Set data of Intent through Uri by parsing phone number
+                phone_intent.setData(Uri.parse("tel:" + phone_number0));
+                //  Called.setText(Name0 + "\n" + phone_number0);
+                // start Intent
+                startActivity(phone_intent);
+
+
+            }*/
+          /*  Intent intent = new Intent(this, MyService.class);
+            startService(intent);*/
+
+        }if (common.magicbtn == 11) {
+           /* Toast.makeText(getApplicationContext(), "You Clicked NearBy", Toast.LENGTH_SHORT).show();
+            // Nearby mActivity = new Nearby();
+
+
+
+            Intent intentNearby = new Intent(getBaseContext(), Nearby.class);
 //                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
-            // startActivity(intentEmergencyCall);
+            startActivity(intentNearby);*/
+
+
         }if (common.magicbtn == 12){
             Toast.makeText(getApplicationContext(), "You Clicked Emergency SMS", Toast.LENGTH_SHORT).show();
             Intent intentEmergencySms = new Intent(getBaseContext(), EmergencySms.class);
 //                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
             startActivity(intentEmergencySms);}
+
         stop();
 
 
@@ -310,7 +407,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void stop() {
-       common.magicbtn = 0;
+        common.magicbtn = 0;
 
     }
 
@@ -377,7 +474,7 @@ public class MainActivity extends AppCompatActivity {
 
         // call Login Activity
         Toast.makeText(getApplicationContext(), "You Clicked Training", Toast.LENGTH_LONG).show();
-          Intent intentTraining = new Intent(getBaseContext(), Training.class);
+        Intent intentTraining = new Intent(getBaseContext(), Training.class);
 //                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
         startActivity(intentTraining);
     }
@@ -489,7 +586,7 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Log.d("BLE", "onResume: Searching for SmartCane...");
             this.bleController.init();
-          //  registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
+            //  registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
 
         }
     }
@@ -499,6 +596,83 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
     }
+    public void onStartServiceClick(View v) {
+        startService();
+    }
 
+    public void onStopServiceClick(View v) {
+        stopService();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG, "onDestroy called");
+        stopService();
+        super.onDestroy();
+    }
+
+    public void startService() {
+        Log.d(TAG, "startService called");
+        if (!MyService.isServiceRunning) {
+            Intent serviceIntent = new Intent(this, MyService.class);
+            ContextCompat.startForegroundService(this, serviceIntent);
+        }
+    }
+
+    public void stopService() {
+        Log.d(TAG, "stopService called");
+        if (MyService.isServiceRunning) {
+            Intent serviceIntent = new Intent(this, MyService.class);
+            stopService(serviceIntent);
+        }
+    }
+
+    public void startServiceViaWorker() {
+        Log.d(TAG, "startServiceViaWorker called");
+        String UNIQUE_WORK_NAME = "StartMyServiceViaWorker";
+        WorkManager workManager = WorkManager.getInstance(this);
+
+        // As per Documentation: The minimum repeat interval that can be defined is 15 minutes
+        // (same as the JobScheduler API), but in practice 15 doesn't work. Using 16 here
+        PeriodicWorkRequest request =
+                new PeriodicWorkRequest.Builder(
+                        MyWorker.class,
+                        16,
+                        TimeUnit.MINUTES)
+                        .build();
+
+        // to schedule a unique work, no matter how many times app is opened i.e. startServiceViaWorker gets called
+        // do check for AutoStart permission
+        workManager.enqueueUniquePeriodicWork(UNIQUE_WORK_NAME, ExistingPeriodicWorkPolicy.KEEP, request);
+
+    }
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE) {
+            if (!Settings.canDrawOverlays(this)) {
+                // You don't have permission
+                checkPermission();
+            } else {
+                // Do as per your logic
+            }
+
+        }
+
+    }
+
+    public void checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + getPackageName()));
+                startActivityForResult(intent, ACTION_MANAGE_OVERLAY_PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
 }
+
+
 

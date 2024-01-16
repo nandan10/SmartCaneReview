@@ -7,12 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.ContactsContract;
 import android.provider.Settings;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,9 +28,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.CancellationToken;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnTokenCanceledListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
+
 
 
 
@@ -59,7 +68,7 @@ public class EmergencySms extends AppCompatActivity {
 
         sms.setAdapter(customAdapter);
 
-
+        onsos();
 
         // check for runtime permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -83,19 +92,11 @@ public class EmergencySms extends AppCompatActivity {
             }
         }
 
-        // start the service
-        SensorService sensorService = new SensorService();
-        Intent intent = new Intent(this, sensorService.getClass());
-        if (!isMyServiceRunning(sensorService.getClass())) {
-            startService(intent);
-        }
+
 
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation3);
 
-        // Set Home selected
-       // bottomNavigationView.setSelectedItemId(R.id.home1);
 
-        // Perform item selected listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -130,78 +131,11 @@ public class EmergencySms extends AppCompatActivity {
 
     }
 
-    // method to check if the service is running
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                Log.i("Service status", "Running");
-                return true;
-            }
-        }
-        Log.i("Service status", "Not running");
-        return false;
-    }
-
-    @Override
-    protected void onDestroy() {
-        Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction("restartservice");
-        broadcastIntent.setClass(this, ReactivateService.class);
-        this.sendBroadcast(broadcastIntent);
-        super.onDestroy();
-    }
-
-
-    @SuppressLint("Range")
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-
-        // get the contact from the PhoneBook of device
-        switch (requestCode) {
-            case (PICK_CONTACT):
-                if (resultCode == Activity.RESULT_OK) {
-
-                    Uri contactData = data.getData();
-                    Cursor c = managedQuery(contactData, null, null, null, null);
-                    if (c.moveToFirst()) {
-
-                        String id = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
-                        @SuppressLint("Range") String hasPhone = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-                        String phone = null;
-
-                        try {
-                            if (hasPhone.equalsIgnoreCase("1")) {
-                                Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id, null, null);
-                                phones.moveToFirst();
-                                phone = phones.getString(phones.getColumnIndex("data1"));
-
-                            }
-                            String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                            db.addcontact(new ContactModel(0, name, phone));
-
-
-                            list = db.getAllContacts();
-                            customAdapter.refresh(list);
-                            // Message.setText(db.count());
-
-
-                        } catch (Exception ex) {
-                        }
-                    }
-                }
-                break;
-
-        }
-    }
-
     // this method prompts the user to remove any
     // battery optimisation constraints from the App
     private void askIgnoreOptimization() {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             @SuppressLint("BatteryLife") Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
             intent.setData(Uri.parse("package:" + getPackageName()));
             startActivityForResult(intent, IGNORE_BATTERY_OPTIMIZATION_REQUEST);
@@ -211,5 +145,85 @@ public class EmergencySms extends AppCompatActivity {
     public void goBackPressed(View view) {
         onBackPressed();
     }
+    public void onsos() {
+
+        // create FusedLocationProviderClient to get the user location
+        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+
+
+        if (ActivityCompat.checkSelfPermission(EmergencySms.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(EmergencySms.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        fusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY, new CancellationToken() {
+            @Override
+            public boolean isCancellationRequested() {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            public CancellationToken onCanceledRequested(@NonNull OnTokenCanceledListener onTokenCanceledListener) {
+                return null;
+            }
+        }).addOnSuccessListener(new OnSuccessListener<android.location.Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                // check if location is null
+                // for both the cases we will
+                // create different messages
+                if (location != null) {
+
+                    // get the SMSManager
+                    SmsManager smsManager = SmsManager.getDefault();
+
+                    // get the list of all the contacts in Database
+                    DbHelper db = new DbHelper(EmergencySms.this);
+                    List<ContactModel> list = db.getAllContacts();
+
+                    // send SMS to each contact
+                    for (ContactModel c : list) {
+                        String message = "Hey, " + c.getName() + " I am in DANGER, need help. Please urgently reach me out. Here are my coordinates.\n " + "http://maps.google.com/?q=" + location.getLatitude() + "," + location.getLongitude();
+                        smsManager.sendTextMessage(c.getPhoneNo(), null, message, null, null);
+
+
+
+                    }
+                } else {
+                   /* String message = " I am in DANGER, need help. Please urgently reach me out.\n" + "GPS was turned off.Couldn't find location. Call your nearest Police Station.";
+                    SmsManager smsManager = SmsManager.getDefault();
+                    DbHelper db = new DbHelper(SensorService.this);
+                    List<ContactModel> list = db.getAllContacts();
+                    for (ContactModel c : list) {
+                        smsManager.sendTextMessage(c.getPhoneNo(), null, message, null, null);
+
+                    }*/
+                }
+            }
+        });
+    /*.addOnFailureListener(new OnFailureListener() {
+           // @Override
+           /* public void onFailure(@NonNull Exception e) {
+                Log.d("Check: ", "OnFailure");
+                String message = "I am in DANGER, need help. Please urgently reach me out.\n" + "GPS was turned off.Couldn't find location. Call your nearest Police Station.";
+                SmsManager smsManager = SmsManager.getDefault();
+                DbHelper db = new DbHelper(SensorService.this);
+                List<ContactModel> list = db.getAllContacts();
+                for (ContactModel c : list) {
+                    smsManager.sendTextMessage(c.getPhoneNo(), null, message, null, null);
+                }
+            }
+        });*/
+
+        // this method is called for making a call.
+
+    }
+
 
 }

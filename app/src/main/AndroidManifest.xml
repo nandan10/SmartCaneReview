@@ -28,6 +28,8 @@
     <uses-permission android:name="android.permission.WRITE_SMS"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
     <!--This permission is necessary for devices
       with Android O and above, so that
       we can use the location ALL THE TIME-->
@@ -45,6 +47,15 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartCaneDebug">
+        <receiver
+            android:name="com.example.smartcanedebug.MyReceiver"
+            android:enabled="true"
+            android:exported="false"></receiver>
+
+        <service
+            android:name="com.example.smartcanedebug.MyService"
+            android:enabled="true"
+            android:exported="true" />
         <receiver
             android:name=".ReactivateService"
             android:enabled="true"
@@ -103,10 +114,7 @@
 
 
         <!-- register the service -->
-        <service
-            android:name=".SensorService"
-            android:enabled="true"
-            android:exported="true" />
+
 
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"

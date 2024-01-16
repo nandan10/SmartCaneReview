@@ -42,4 +42,7 @@ dependencies {
     implementation 'com.karumi:dexter:6.2.2'
     implementation 'com.github.andremion:counterfab:1.2.2'
     implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
+    implementation 'androidx.work:work-runtime:2.8.1'
+
+
 }

@@ -119,42 +119,7 @@ public class IntensityActivity extends AppCompatActivity{
     }
 
 
-//    @Override
-//    public void onBackPressed() {
-//        Intent intentMain = new Intent(this, MainActivity.class);
-//        startActivity(intentMain);
-//        finish();
-//    }
 
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event)  {
-//        if (keyCode == KeyEvent.KEYCODE_BACK ) {
-//            // do something on back.
-//            return true;
-//        }
-//
-//        return super.onKeyDown(keyCode, event);
-//    }
-
-  /*  private void initButtons() {
-        this.VibrationIntensity = findViewById(R.id.vibration);
-        this.VibrationIntensity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bleController.writeBLEData(bleController.vibrationChar, common.vibration);
-            }
-        });
-
-        this.BuzzerIntensity = findViewById(R.id.buzzer);
-        this.BuzzerIntensity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bleController.writeBLEData(bleController.buzzerChar, common.buzzer);
-            }
-        });
-
-
-    }*/
   private void initButtons() {
       this.beginnerProfileButton = findViewById(R.id.btnProfileBeginner);
       this.beginnerProfileButton.setOnClickListener(new View.OnClickListener() {

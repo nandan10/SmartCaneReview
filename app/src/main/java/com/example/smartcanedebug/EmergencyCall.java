@@ -52,10 +52,6 @@ public class EmergencyCall extends AppCompatActivity {
         List<ContactModel> list = db.getAllContacts();
 
 
-        //CustomAdapter customAdapter = new CustomAdapter(this, list);
-        // customAdapter.addAll();
-
-        //call.setAdapter(customAdapter);
 
 
         boolean noData = list.isEmpty();
@@ -116,18 +112,7 @@ public class EmergencyCall extends AppCompatActivity {
                         // for (i = 0; i < listItems.size(); i++) {
                         System.out.println("List of first three elements: " + phone_number1);
                         // }
-                         /* String phone_number = c.getPhoneNo();
-                          String Name = c.getName();
-                          Intent callIntent = new Intent(Intent.ACTION_CALL);
-                          // on below line we are setting data to it.
-                          callIntent.setData(Uri.parse("tel:" + phone_number));
-                          // on below line we are checking if the calling permissions are granted not.
 
-                          // at last we are starting activity.
-                          startActivity(callIntent);
-
-
-                      }*/
 
 
                         Intent callIntent = new Intent(Intent.ACTION_CALL);
@@ -142,21 +127,7 @@ public class EmergencyCall extends AppCompatActivity {
                         startActivity(callIntent);
 
 
-                        //String phone_number = c.getPhoneNo();
 
-
-                        // this method is called for making a call.
-                        // on below line we are calling an intent to make a call.
-                      /*  Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        // on below line we are setting data to it.
-                        callIntent.setData(Uri.parse("tel:" + phone_number1));
-                        // on below line we are checking if the calling permissions are granted not.
-
-                        // at last we are starting activity.
-                        startActivity(callIntent);*/
-
-
-                        // send SMS to each contact
                     } });
 
 

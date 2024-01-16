@@ -16,9 +16,10 @@ import android.bluetooth.BluetoothProfile;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-
+import android.content.BroadcastReceiver;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -26,7 +27,7 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.core.content.ContextCompat;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -36,6 +37,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.bluetooth.BluetoothDevice;
+import android.util.Log;
+import android.content.IntentFilter;
 
 public class BLEController {
     private final static String TAG = BLEController.class.getSimpleName();
@@ -71,8 +78,8 @@ public class BLEController {
     private BluetoothDevice device;
     private BluetoothGatt bluetoothGatt;
     private BluetoothManager bluetoothManager;
-   // private BLEController bleController;
-   // Context activity;
+    // private BLEController bleController;
+    // Context activity;
 //    BLEService debugService(debugServiceUUID);
 //    BLEUnsignedCharCharacteristic setThresholdsChar(setThresholdsCharUUID, BLERead | BLEWrite);
 //    BLEUnsignedCharCharacteristic distanceChar(distanceCharUUID, BLERead | BLENotify);
@@ -163,6 +170,10 @@ public class BLEController {
     UUID CommandUuid = UUID.fromString("19b10003-e8f2-537e-4f6c-d104768a1210");
     UUID MiscUuid = UUID.fromString( "19b10003-e8f2-537e-4f6c-d104768a1211");
     UUID MagicUuid = UUID.fromString( "19b10003-e8f2-537e-4f6c-d104768a1212");
+
+
+
+
     BluetoothGattCharacteristic misc = null;
     BluetoothGattCharacteristic magic = null;
     BluetoothGattCharacteristic batteryLevelChar = null;
@@ -170,6 +181,7 @@ public class BLEController {
     BluetoothGattCharacteristic buzzer = null;
     BluetoothGattCharacteristic vibration = null;
     BluetoothGattCharacteristic operatingModeStatus = null;
+
   /*  BluetoothGattCharacteristic batterylevel = null;
     BluetoothGattCharacteristic operatingModeStatus = null;
     BluetoothGattCharacteristic muteStatus = null;
@@ -190,7 +202,7 @@ public class BLEController {
     private final HashMap<String, BluetoothDevice> devices = new HashMap<>();
     private final Common common;
 
-  //  Context context = getApplicationContext();
+    //  Context context = getApplicationContext();
 
     //    EditText distance1EditText = findViewById(R.id.editTextDistance1);
 //    EditText distance2EditText = findViewById(R.id.editTextDistance2);
@@ -232,8 +244,40 @@ public class BLEController {
     TextView modeValueTxt;
     TextView muteValueTxt;
     TextView errorsValueTxt;
-   // Handler mHandler;
+    // Handler mHandler;
     Dialog dialog;
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            final String action = intent.getAction();
+
+            if (action.equals(BluetoothDevice.ACTION_BOND_STATE_CHANGED))
+            {
+                final int state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
+
+                switch(state){
+                    case BluetoothDevice.BOND_BONDING:
+                        // Bonding...
+                        break;
+
+                    case BluetoothDevice.BOND_BONDED:
+                        // Bonded...
+                        MainActivity mActivity = new MainActivity();
+                        mActivity.unregisterReceiver(mReceiver);
+                        break;
+
+                    case BluetoothDevice.BOND_NONE:
+                        // Not bonded...
+                        break;
+                }
+            }
+        }
+    };
+
+
+
 
     private BLEController(Context ctx) {
         try {
@@ -261,29 +305,29 @@ public class BLEController {
         return false;
     }
 
-  /*  private void initOtherActivityItems() {
-        distance1EditText = findViewById(R.id.editTextDistance1);
-        distance2EditText = findViewById(R.id.editTextDistance2);
-        distance3EditText = findViewById(R.id.editTextDistance3);
-        distance4EditText = findViewById(R.id.editTextDistance4);
-        distance5EditText = findViewById(R.id.editTextDistance5);
-        distance6EditText = findViewById(R.id.editTextDistance6);
-        threshold1EditText = findViewById(R.id.editTextThreshold1);
-        threshold2EditText = findViewById(R.id.editTextThreshold2);
-        threshold3EditText = findViewById(R.id.editTextThreshold3);
-        threshold4EditText = findViewById(R.id.editTextThreshold4);
-        threshold5EditText = findViewById(R.id.editTextThreshold5);
-        threshold6EditText = findViewById(R.id.editTextThreshold6);
+    /*  private void initOtherActivityItems() {
+          distance1EditText = findViewById(R.id.editTextDistance1);
+          distance2EditText = findViewById(R.id.editTextDistance2);
+          distance3EditText = findViewById(R.id.editTextDistance3);
+          distance4EditText = findViewById(R.id.editTextDistance4);
+          distance5EditText = findViewById(R.id.editTextDistance5);
+          distance6EditText = findViewById(R.id.editTextDistance6);
+          threshold1EditText = findViewById(R.id.editTextThreshold1);
+          threshold2EditText = findViewById(R.id.editTextThreshold2);
+          threshold3EditText = findViewById(R.id.editTextThreshold3);
+          threshold4EditText = findViewById(R.id.editTextThreshold4);
+          threshold5EditText = findViewById(R.id.editTextThreshold5);
+          threshold6EditText = findViewById(R.id.editTextThreshold6);
 
-        distanceValueTxt = findViewById(R.id.txtDistanceValue);
-        currentTypeValueTxt = findViewById(R.id.txtCurrentTypeValue);
-        currentPatternValueTxt = findViewById(R.id.txtCurrentPatternValue);
-        batteryValueTxt = findViewById(R.id.txtBatteryValue);
-        modeValueTxt = findViewById(R.id.txtModeValue);
-        muteValueTxt = findViewById(R.id.txtMuteValue);
-        errorsValueTxt = findViewById(R.id.txtErrorsValue);
-    }
-*/
+          distanceValueTxt = findViewById(R.id.txtDistanceValue);
+          currentTypeValueTxt = findViewById(R.id.txtCurrentTypeValue);
+          currentPatternValueTxt = findViewById(R.id.txtCurrentPatternValue);
+          batteryValueTxt = findViewById(R.id.txtBatteryValue);
+          modeValueTxt = findViewById(R.id.txtModeValue);
+          muteValueTxt = findViewById(R.id.txtMuteValue);
+          errorsValueTxt = findViewById(R.id.txtErrorsValue);
+      }
+  */
     private final ScanCallback bleCallback = new ScanCallback() {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
@@ -315,6 +359,11 @@ public class BLEController {
         return (device.getName() != null) && device.getName().startsWith("IITD");
     }
 
+
+
+
+
+
     public void connectToDevice(String address) {
 //        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
 //            // TODO: Consider calling
@@ -333,14 +382,14 @@ public class BLEController {
         this.bluetoothGatt = device.connectGatt(null, false, this.bleConnectCallback);
     }
 
-  public  BluetoothGattCallback bleConnectCallback = new BluetoothGattCallback() {
+    public  BluetoothGattCallback bleConnectCallback = new BluetoothGattCallback() {
 
 
-     // private BluetoothGattCharacteristic bgc;
+        // private BluetoothGattCharacteristic bgc;
 
-      @Override
+        @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-          String intentAction;
+            String intentAction;
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 //intentAction = ACTION_GATT_CONNECTED;
                 mConnectionState = STATE_CONNECTED;
@@ -355,8 +404,8 @@ public class BLEController {
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 initChars();
                 //intentAction = ACTION_GATT_DISCONNECTED;
-               // mConnectionState = STATE_DISCONNECTED;
-               // broadcastUpdate(intentAction);
+                // mConnectionState = STATE_DISCONNECTED;
+                // broadcastUpdate(intentAction);
                 Log.w("[BLE]", "DISCONNECTED with status " + status);
 //                Toast.makeText(context, "Smart Cane disconnected", Toast.LENGTH_LONG).show();
             } else {
@@ -458,7 +507,7 @@ public class BLEController {
                 Log.d("BLE", "onServicesDiscovered: reset char______________________________________________________________________________");
                 for (BluetoothGattService service : gatt.getServices()) {
 
-                   // broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED);
+                    // broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED);
                     List<BluetoothGattCharacteristic> gattCharacteristics = service.getCharacteristics();
                     for (BluetoothGattCharacteristic bgc : gattCharacteristics) {
                         Log.d("BLE Service discovered", "onServicesDiscovered: " + service.getUuid().toString());
@@ -487,14 +536,15 @@ public class BLEController {
                             Log.d("BLE Char discovered", "onServicesDiscovered: " + bgc.getUuid().toString());
                             if (bgc.getUuid().toString().equalsIgnoreCase(String.valueOf(MiscUuid))) {
                                 misc = bgc;}
-                               else if (bgc.getUuid().toString().equalsIgnoreCase(String.valueOf(MagicUuid))) {
-                                    magic = bgc;
-                                    setCharNotification(gatt, bgc);
+                            else if (bgc.getUuid().toString().equalsIgnoreCase(String.valueOf(MagicUuid))) {
+                                magic = bgc;
+                                setCharNotification(gatt, bgc);}}
 
 
 
 
-                                    //  if (service.getUuid().toString().equalsIgnoreCase(debugServiceUUID)) {
+
+                        //  if (service.getUuid().toString().equalsIgnoreCase(debugServiceUUID)) {
                        /* for (BluetoothGattCharacteristic bgc : gattCharacteristics) {
                             Log.d("BLE Char discovered", "onServicesDiscovered: " + bgc.getUuid().toString());
                             if (bgc.getUuid().toString().equalsIgnoreCase(setThresholdsCharUUID)) {
@@ -567,7 +617,7 @@ public class BLEController {
                         }
                     }
                 }*/
-                            }}}}
+                    }}
                 class enableCharNotificationDescriptor implements Runnable {
                     //        runOnUiThread(new Runnable() {
                     @Override
@@ -634,6 +684,28 @@ public class BLEController {
                 // common.debugReadReadyFLag = true;
 //                    DebugActivity.getInstance().displayThresholdValues();
             }
+
+
+            else if(BluetoothGatt.GATT_INSUFFICIENT_AUTHENTICATION == status ||
+                    BluetoothGatt.GATT_INSUFFICIENT_ENCRYPTION == status)
+            {
+                /*
+                 * failed to complete the operation because of encryption issues,
+                 * this means we need to bond with the device
+                 */
+
+                /*
+                 * registering Bluetooth BroadcastReceiver to be notified
+                 * for any bonding messages
+                 */
+                IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+                MainActivity mActivity = new MainActivity();
+                mActivity.registerReceiver(mReceiver, filter);
+            }
+            else
+            {
+                // operation failed for some other reason
+            }
         }
 
 
@@ -661,6 +733,29 @@ public class BLEController {
             else if (characteristic == misc) {
                 //common.misc = characteristic.getValue()[0];
             }
+
+            else if(BluetoothGatt.GATT_INSUFFICIENT_AUTHENTICATION == status ||
+                    BluetoothGatt.GATT_INSUFFICIENT_ENCRYPTION == status)
+            {
+                /*
+                 * failed to complete the operation because of encryption issues,
+                 * this means we need to bond with the device
+                 */
+
+                /*
+                 * registering Bluetooth BroadcastReceiver to be notified
+                 * for any bonding messages
+                 */
+                IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+                MainActivity mActivity = new MainActivity();
+                mActivity.registerReceiver(mReceiver, filter);
+            }
+            else
+            {
+                // operation failed for some other reason
+            }
+
+
         }
       /*  @Override
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
@@ -703,28 +798,28 @@ public class BLEController {
 
 
         //enable notifcations by setting the respective config flag
-       
-       /* public void setCharacteristicNotification(BluetoothGattCharacteristic characteristic,
-                                                  boolean enabled) {
 
-            BluetoothGatt mBluetoothGatt = null;
-            BluetoothAdapter BA = null;
-            if (BA == null || mBluetoothGatt == null) {
+        /* public void setCharacteristicNotification(BluetoothGattCharacteristic characteristic,
+                                                   boolean enabled) {
 
-                Log.d("TAG", "BluetoothAdapter no inicializado");
-                return;
-            }
+             BluetoothGatt mBluetoothGatt = null;
+             BluetoothAdapter BA = null;
+             if (BA == null || mBluetoothGatt == null) {
 
-            mBluetoothGatt.setCharacteristicNotification(characteristic, enabled);
+                 Log.d("TAG", "BluetoothAdapter no inicializado");
+                 return;
+             }
 
-        }*/
+             mBluetoothGatt.setCharacteristicNotification(characteristic, enabled);
+
+         }*/
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
             displayCharacteristic(characteristic);
-          //  broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
+            //  broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
 
             if (characteristic == batteryLevelChar) {
-                 common.batterylevel  = characteristic.getValue()[0];
+                common.batterylevel  = characteristic.getValue()[0];
 
                 Log.d("BatteryLevel", "onCharacteristicChanged, batteryLevel: " + common.batterylevel);
             } else if (characteristic == operatingModeStatus) {
@@ -740,19 +835,21 @@ public class BLEController {
 
 
 
-                   // });
-               // if (common.magicbtn == 1){
-                  //  Log.d("OMS", "click");
-                  //  setDebugCharNotification();
-                   // Toast.makeText( BLEController.this, "You Clicked Settings", Toast.LENGTH_LONG).show();
+                // });
+                // if (common.magicbtn == 1){
+                //  Log.d("OMS", "click");
+                //  setDebugCharNotification();
+                // Toast.makeText( BLEController.this, "You Clicked Settings", Toast.LENGTH_LONG).show();
                        /* Intent intentEmergency = new Intent(getBaseContext(), EmergencyMainActivity.class);
 //                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
                         startActivity(intentEmergency);*/
-               // }*/
+                // }*/
 
-           // broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
+                // broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
 
-            }}
+            }
+
+        }
 
 
     /*  private void broadcastUpdate(final String action) {
@@ -777,8 +874,8 @@ public class BLEController {
       }*/
 
 
-            // if (toggleButton.isChecked()) {
-                        // textview1.setText("CONNECT");
+        // if (toggleButton.isChecked()) {
+        // textview1.setText("CONNECT");
                     /*    Log.d("initButtons", "onClick: Connecting...");
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
@@ -798,7 +895,7 @@ public class BLEController {
 
 
 
-                //}*/
+        //}*/
 
 
       /*  @Override
@@ -860,7 +957,7 @@ public class BLEController {
 
 
 
-     // @Override
+        // @Override
      /* public LocalBinder onBind(Intent intent) {
           return mBinder;
       }
@@ -892,7 +989,7 @@ public class BLEController {
 
       private final LocalBinder mBinder =  new LocalBinder();*/
 
-      @Override
+        @Override
         public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
             Log.i("[BLE]", descriptor.getUuid().toString() + " " + Arrays.toString(descriptor.getValue()));
             Log.i("[BLE]", "status:" + status);
@@ -907,7 +1004,7 @@ public class BLEController {
         bgcNotificationArray.add(bgc);
 
 
-        }
+    }
 
 
 
@@ -940,9 +1037,9 @@ public class BLEController {
     }
 
     public void setDebugCharNotification() {
-       this.bluetoothGatt.setCharacteristicNotification(batteryLevelChar, true);
+        this.bluetoothGatt.setCharacteristicNotification(batteryLevelChar, true);
         //Looper.prepare(); // to be able to make toast
-       // Toast.makeText(common, "battery", Toast.LENGTH_LONG).show();
+        // Toast.makeText(common, "battery", Toast.LENGTH_LONG).show();
         // Looper.loop();
         this.bluetoothGatt.setCharacteristicNotification(magic, true);
 //        this.bluetoothGatt.setCharacteristicNotification(distanceOutputPatternChar, true);
@@ -953,7 +1050,7 @@ public class BLEController {
 //        this.bluetoothGatt.setCharacteristicNotification(errorsChar, true);
     }
 
-public static void displayCharacteristic(final BluetoothGattCharacteristic characteristic) {
+    public static void displayCharacteristic(final BluetoothGattCharacteristic characteristic) {
         Log.i("[BLE]", characteristic.getUuid().toString() + " " + characteristic.getValue());
        /* if (common.magicbtn == 1){
             Log.d("OMS", "click");
@@ -962,8 +1059,8 @@ public static void displayCharacteristic(final BluetoothGattCharacteristic chara
 //                intentNA.putExtra("Type", NAV_TYPE_LOAD_ROUTE);
                         startActivity(intentEmergency);*/
 
-            // overridePendingTransition(0, 0);
-            //Toast.makeText(getApplicationContext(), "You Clicked Settings", Toast.LENGTH_LONG).show();
+        // overridePendingTransition(0, 0);
+        //Toast.makeText(getApplicationContext(), "You Clicked Settings", Toast.LENGTH_LONG).show();
 
 
          /*   Looper.prepare(); // to be able to make toast
@@ -973,7 +1070,7 @@ public static void displayCharacteristic(final BluetoothGattCharacteristic chara
             Toast.makeText(bleController, "Magic Btn ", Toast.LENGTH_LONG).show();
             Looper.loop();*/
 
-        }
+    }
 
 
 

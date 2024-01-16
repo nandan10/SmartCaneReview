@@ -1,19 +1,13 @@
 package com.example.smartcanedebug;
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.provider.ContactsContract;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,13 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import com.example.smartcanedebug.ContactModel;
-import com.example.smartcanedebug.CustomAdapter;
-import com.example.smartcanedebug.DbHelper;
-import com.example.smartcanedebug.ReactivateService;
-import com.example.smartcanedebug.SensorService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
