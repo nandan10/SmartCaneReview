@@ -379,7 +379,7 @@ public class BLEController {
         this.device = devices.get(address);
         this.scanner.stopScan(bleCallback);
         Log.i("[BLE]", "connect to device " + device.getAddress());
-        this.bluetoothGatt = device.connectGatt(null, false, this.bleConnectCallback);
+        this.bluetoothGatt = device.connectGatt(null, true, this.bleConnectCallback);
     }
 
     public  BluetoothGattCallback bleConnectCallback = new BluetoothGattCallback() {
